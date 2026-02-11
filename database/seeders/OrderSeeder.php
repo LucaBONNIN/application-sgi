@@ -25,9 +25,12 @@ class OrderSeeder extends Seeder
 
         foreach ($users as $user) {
             foreach ($user->services as $service) {
+                $budget = $service->budgets->where('year', 2026)->first();
+
                 Order::factory(2)
                     ->for($user)
                     ->for($service)
+                    ->for($budget)
                     ->for($suppliers->random())
                     ->create()
                     ->each(function ($order) use ($categories) {
