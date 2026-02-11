@@ -74,6 +74,6 @@ class AppPanelProvider extends PanelProvider
                     ->brandName('App SGI'),
                 EmailAuthentication::make()
                     ->codeExpiryMinutes(5)
-            ], isRequired: true);
+            ], isRequired: false);
     }
 }
