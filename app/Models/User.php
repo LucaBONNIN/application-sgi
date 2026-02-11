@@ -72,4 +72,14 @@ class User extends Authenticatable implements FilamentUser, HasEmailAuthenticati
         //return str_ends_with($this->email, '@ac-versailles.fr') && $this->hasVerifiedEmail();
         return true;
     }
+
+    public function services(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Service::class);
+    }
+
+    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
 }

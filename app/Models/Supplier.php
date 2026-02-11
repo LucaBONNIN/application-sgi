@@ -6,21 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class Budget extends Model implements Auditable
+class Supplier extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
 
-    /** @use HasFactory<\Database\Factories\BudgetFactory> */
+    /** @use HasFactory<\Database\Factories\SupplierFactory> */
     use HasFactory;
-
-    public function service(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(Service::class);
-    }
 
     public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        // Orders funded by this budget
+        // Orders made to this supplier
         return $this->hasMany(Order::class);
     }
 }

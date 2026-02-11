@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Service;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -7,19 +9,16 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('utilisateur_service', function (Blueprint $table) {
+        Schema::create('service_user', function (Blueprint $table) {
             $table->id();
-
-            $table->unsignedBigInteger('user_id');
-
-            $table->unsignedBigInteger('service_id');
-
+            $table->foreignIdFor(Service::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('utilisateur_service');
+        Schema::dropIfExists('service_user');
     }
 };
