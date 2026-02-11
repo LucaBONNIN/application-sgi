@@ -60,6 +60,13 @@ class User extends Authenticatable implements FilamentUser, HasEmailAuthenticati
         ];
     }
 
+    /**
+     * Should the audit be strict?
+     *
+     * @var bool
+     */
+    protected $auditStrict = true;
+
     public function canAccessPanel(Panel $panel): bool
     {
         //return str_ends_with($this->email, '@ac-versailles.fr') && $this->hasVerifiedEmail();
