@@ -15,6 +15,7 @@
         "tapp/filament-auditing": "^4.0"
     },
     "require-dev": {
+        "beyondcode/laravel-er-diagram-generator": "^5.0",
         "fakerphp/faker": "^1.23",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.24",
@@ -22,6 +23,7 @@
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
         "phpunit/phpunit": "^11.5.3",
+        "recca0120/laravel-erd": "^0.4",
         "serversideup/spin": "^3.1"
     },
     "autoload": {

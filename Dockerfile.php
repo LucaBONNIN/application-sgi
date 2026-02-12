@@ -9,6 +9,7 @@ FROM serversideup/php:8.5-fpm-nginx AS base
 ## Uncomment if you need to install additional PHP extensions
 USER root
 RUN install-php-extensions intl
+RUN docker-php-serversideup-dep-install-debian graphviz
 
 ############################################
 # Development Image
@@ -32,7 +33,7 @@ RUN update-ca-certificates
 RUN docker-php-serversideup-set-id www-data $USER_ID:$GROUP_ID  && \
     docker-php-serversideup-set-file-permissions --owner $USER_ID:$GROUP_ID
 
-# Drop privileges back to www-data    
+# Drop privileges back to www-data
 USER www-data
 
 ############################################
