@@ -8,13 +8,13 @@ use Filament\Support\Contracts\HasLabel;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Support\Htmlable;
 
-enum RequestStatus: string implements HasLabel, HasIcon, HasDescription
+enum OrderStatus: int implements HasLabel, HasIcon, HasDescription
 {
-    case Sent = 'sent';
-    case Processing = 'processing';
-    case Ordered = 'ordered';
-    case Received = 'received';
-    case Cancelled = 'cancelled';
+    case Sent = 1;
+    case Processing = 2;
+    case Ordered = 3;
+    case Received = 4;
+    case Cancelled = 5;
 
     public function getLabel(): string | Htmlable | null
     {

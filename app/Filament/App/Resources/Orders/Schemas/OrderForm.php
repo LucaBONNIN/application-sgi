@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\Orders\Schemas;
 
+use App\Enums\OrderStatus;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
@@ -10,7 +11,6 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
-use App\Enums\RequestStatus;
 
 class OrderForm
 {
@@ -32,6 +32,12 @@ class OrderForm
                     ->relationship('supplier', 'name')
                     ->searchable()
                     ->required(),
+
+                TextInput::make('budget_id')
+                    ->integer(),
+
+                Select::make('status')
+                    ->options(OrderStatus::class),
 
                 Textarea::make('description')
                     ->label('Description')
