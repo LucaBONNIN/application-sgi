@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\Orders\Schemas;
 
+use App\Enums\OrderStatus;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -32,9 +33,8 @@ class OrderForm
                 TextInput::make('budget_id')
                     ->integer(),
 
-                TextInput::make('status')
-                    ->required()
-                    ->integer(),
+                Select::make('status')
+                    ->options(OrderStatus::class),
 
                 TextInput::make('description'),
 

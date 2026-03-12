@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\OrderStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,7 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'status' => fake()->randomDigit(),
+            'status' => fake()->randomElement(OrderStatus::cases()),
             'description' => fake()->sentence(),
             'created_at' => fake()->dateTimeBetween('-1 year', 'now'),
             'estimated_delivery_date' => fake()->dateTimeBetween('now', '+1 month'),

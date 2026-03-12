@@ -27,7 +27,7 @@ class OrdersTable
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('budget_id'),
+                TextColumn::make('budget.year'),
 
                 TextColumn::make('status'),
 

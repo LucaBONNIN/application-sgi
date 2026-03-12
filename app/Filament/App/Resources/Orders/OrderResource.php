@@ -41,7 +41,7 @@ class OrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            LinesRelationManager::class,
+            LinesRelationManager::class
         ];
     }
 
@@ -84,6 +84,10 @@ class OrderResource extends Resource
 
         if ($record->user) {
             $details['User'] = $record->user->name;
+        }
+
+        if ($record->budget) {
+            $details['Budget'] = $record->budget->year;
         }
 
         return $details;
