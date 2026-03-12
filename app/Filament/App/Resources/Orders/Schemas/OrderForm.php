@@ -4,7 +4,10 @@ namespace App\Filament\App\Resources\Orders\Schemas;
 
 use App\Enums\OrderStatus;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
@@ -15,15 +18,15 @@ class OrderForm
     {
         return $schema
             ->components([
-                Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->searchable()
-                    ->required(),
+                Hidden::make('user_id')
+                    ->default(fn () => auth()->id()),
 
                 Select::make('service_id')
                     ->relationship('service', 'name')
                     ->searchable()
-                    ->required(),
+                    ->preload()
+                    ->required()
+                    ->label('Service'),
 
                 Select::make('supplier_id')
                     ->relationship('supplier', 'name')
@@ -36,19 +39,15 @@ class OrderForm
                 Select::make('status')
                     ->options(OrderStatus::class),
 
-                TextInput::make('description'),
+                Textarea::make('description')
+                    ->label('Description')
+                    ->rows(3)
+                    ->nullable(),
 
-                TextInput::make('quotation_path'),
-
-                DatePicker::make('estimated_delivery_date'),
-
-                TextEntry::make('created_at')
-                    ->label('Created Date')
-                    ->dateTime(),
-
-                TextEntry::make('updated_at')
-                    ->label('Last Modified Date')
-                    ->dateTime(),
+                FileUpload::make('quotation_path')
+                    ->label('Devis (fichier)')
+                    ->directory('quotations')
+                    ->nullable(),
             ]);
     }
 }

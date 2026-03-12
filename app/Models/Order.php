@@ -23,8 +23,20 @@ class Order extends Model implements Auditable
     {
         return [
             'status' => OrderStatus::class,
+            'estimated_delivery_date' => 'date',
         ];
     }
+
+    protected $fillable = [
+        'user_id',
+        'service_id',
+        'supplier_id',
+        'budget_id',
+        'status',
+        'description',
+        'quotation_path',
+        'estimated_delivery_date',
+    ];
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
