@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use Filament\Auth\MultiFactor\App\AppAuthentication;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Auth\MultiFactor\Email\EmailAuthentication;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -44,6 +45,9 @@ class AppPanelProvider extends PanelProvider
                 FilamentInfoWidget::class,
             ])
             ->plugins([
+                FilamentShieldPlugin::make()
+                    ->navigationGroup(__('filament/navigation.groups.admin'))
+                    ->navigationSort(3),
                 FilamentAuditingPlugin::make(),
             ])
             ->middleware([
@@ -74,6 +78,10 @@ class AppPanelProvider extends PanelProvider
                     ->brandName('App SGI'),
                 EmailAuthentication::make()
                     ->codeExpiryMinutes(5)
-            ], isRequired: false);
+            ], isRequired: false)
+            ->navigationGroups([
+                __('filament/navigation.groups.orders'),
+                __('filament/navigation.groups.admin'),
+            ]);
     }
 }

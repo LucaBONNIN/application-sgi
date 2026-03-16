@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use OwenIt\Auditing\Contracts\Auditable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements FilamentUser, HasEmailAuthentication, HasAppAuthentication, HasAppAuthenticationRecovery, MustVerifyEmail, Auditable
 {
@@ -22,6 +23,7 @@ class User extends Authenticatable implements FilamentUser, HasEmailAuthenticati
     use InteractsWithAppAuthenticationRecovery;
     use InteractsWithEmailAuthentication;
     use \OwenIt\Auditing\Auditable;
+    use HasRoles;
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;

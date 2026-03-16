@@ -18,9 +18,21 @@ class BudgetResource extends Resource
 {
     protected static ?string $model = Budget::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBanknotes;
+    protected static string|BackedEnum|null $activeNavigationIcon = Heroicon::Banknotes;
+    protected static ?int $navigationSort = 3;
 
-    protected static ?string $recordTitleAttribute = 'annee';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament/navigation.groups.orders');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('filament/resources/budget.navigation_label');
+    }
+
+    protected static ?string $recordTitleAttribute = 'budgetName';
 
     public static function form(Schema $schema): Schema
     {

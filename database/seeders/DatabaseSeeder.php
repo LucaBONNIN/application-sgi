@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             // Independant
+            ShieldSeeder::class,
             CategorySeeder::class,
             SupplierSeeder::class,
             ServiceSeeder::class, // also creates Budgets

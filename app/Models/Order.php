@@ -14,6 +14,12 @@ class Order extends Model implements Auditable
     /** @use HasFactory<\Database\Factories\OrderFactory> */
     use HasFactory;
 
+
+    protected $fillable = [
+        'user_id',
+        'description'
+    ];
+
     /**
      * Get the attributes that should be cast.
      *

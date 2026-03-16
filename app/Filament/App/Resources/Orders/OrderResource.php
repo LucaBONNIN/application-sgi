@@ -14,14 +14,31 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use UnitEnum;
 
 class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static ?string $slug = 'orders';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedInboxArrowDown;
+    protected static string|BackedEnum|null $activeNavigationIcon = Heroicon::InboxArrowDown;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?int $navigationSort = 1;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament/navigation.groups.orders');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('filament/resources/order.navigation_label');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('filament/resources/order.label');
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -91,5 +108,18 @@ class OrderResource extends Resource
         }
 
         return $details;
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        // If the user DOES NOT have the bypass permission,
+        // restrict the query to only their orders.
+        if (! auth()->user()->can('BypassOwnership:Order')) {
+            $query->where('user_id', auth()->id());
+        }
+
+        return $query;
     }
 }

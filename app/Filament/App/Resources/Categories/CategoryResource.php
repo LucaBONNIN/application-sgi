@@ -18,9 +18,28 @@ class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
-
     protected static ?string $recordTitleAttribute = 'name';
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleGroup;
+    protected static string|BackedEnum|null $activeNavigationIcon = Heroicon::RectangleGroup;
+
+
+    protected static ?int $navigationSort = 2;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament/navigation.groups.orders');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('filament/resources/category.navigation_label');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('filament/resources/category.label');
+    }
 
     public static function form(Schema $schema): Schema
     {
