@@ -1,0 +1,300 @@
+@startuml class-diagram
+  package App as App {
+    package Resources as App.Resources {
+      class "AuditResource" as App_Resources_AuditResource {
+        #navigationSort : ?int
+        #navigationIcon : string|BackedEnum|null
+        #activeNavigationIcon : string|BackedEnum|null
+        {static} +getNavigationGroup()
+      }
+      package VacationPeriods as App.Resources.VacationPeriods {
+        class "VacationPeriodResource" as App_Resources_VacationPeriods_VacationPeriodResource {
+          #model : ?string
+          #navigationIcon : string|BackedEnum|null
+          #activeNavigationIcon : string|BackedEnum|null
+          #navigationSort : ?int
+          #recordTitleAttribute : ?string
+          {static} +getNavigationGroup()
+          {static} +getNavigationLabel()
+          {static} +getModelLabel()
+          {static} +form(schema)
+          {static} +table(table)
+          {static} +getRelations()
+          {static} +getPages()
+        }
+        package Tables as App.Resources.VacationPeriods.Tables {
+          class "VacationPeriodsTable" as App_Resources_VacationPeriods_Tables_VacationPeriodsTable {
+            {static} +configure(table)
+          }
+        }
+        package Schemas as App.Resources.VacationPeriods.Schemas {
+          class "VacationPeriodForm" as App_Resources_VacationPeriods_Schemas_VacationPeriodForm {
+            {static} +configure(schema)
+          }
+        }
+        package Pages as App.Resources.VacationPeriods.Pages {
+          class "ListVacationPeriods" as App_Resources_VacationPeriods_Pages_ListVacationPeriods {
+            #resource : string
+            #getHeaderActions()
+          }
+          class "EditVacationPeriod" as App_Resources_VacationPeriods_Pages_EditVacationPeriod {
+            #resource : string
+            #getHeaderActions()
+          }
+          class "CreateVacationPeriod" as App_Resources_VacationPeriods_Pages_CreateVacationPeriod {
+            #resource : string
+          }
+        }
+      }
+      package Users as App.Resources.Users {
+        class "UserResource" as App_Resources_Users_UserResource {
+          #model : ?string
+          #navigationIcon : string|BackedEnum|null
+          #activeNavigationIcon : string|BackedEnum|null
+          #navigationSort : ?int
+          {static} +getNavigationGroup()
+          {static} +getNavigationLabel()
+          {static} +form(schema)
+          {static} +table(table)
+          {static} +getRelations()
+          {static} +getPages()
+        }
+        package Tables as App.Resources.Users.Tables {
+          class "UsersTable" as App_Resources_Users_Tables_UsersTable {
+            {static} +configure(table)
+          }
+        }
+        package Schemas as App.Resources.Users.Schemas {
+          class "UserForm" as App_Resources_Users_Schemas_UserForm {
+            {static} +configure(schema)
+          }
+        }
+        package RelationManagers as App.Resources.Users.RelationManagers {
+          class "OrdersRelationManager" as App_Resources_Users_RelationManagers_OrdersRelationManager {
+            #relationship : string
+            +infolist(schema)
+            +table(table)
+          }
+        }
+        package Pages as App.Resources.Users.Pages {
+          class "ListUsers" as App_Resources_Users_Pages_ListUsers {
+            #resource : string
+            #getHeaderActions()
+          }
+          class "EditUser" as App_Resources_Users_Pages_EditUser {
+            #resource : string
+            #getHeaderActions()
+          }
+          class "CreateUser" as App_Resources_Users_Pages_CreateUser {
+            #resource : string
+          }
+        }
+      }
+      package Budgets as App.Resources.Budgets {
+        class "BudgetResource" as App_Resources_Budgets_BudgetResource {
+          #model : ?string
+          #navigationIcon : string|BackedEnum|null
+          #activeNavigationIcon : string|BackedEnum|null
+          #navigationSort : ?int
+          #recordTitleAttribute : ?string
+          {static} +getNavigationGroup()
+          {static} +getNavigationLabel()
+          {static} +form(schema)
+          {static} +table(table)
+          {static} +getRelations()
+          {static} +getPages()
+        }
+        package Tables as App.Resources.Budgets.Tables {
+          class "BudgetsTable" as App_Resources_Budgets_Tables_BudgetsTable {
+            {static} +configure(table)
+          }
+        }
+        package Schemas as App.Resources.Budgets.Schemas {
+          class "BudgetForm" as App_Resources_Budgets_Schemas_BudgetForm {
+            {static} +configure(schema)
+          }
+        }
+        package Pages as App.Resources.Budgets.Pages {
+          class "EditBudget" as App_Resources_Budgets_Pages_EditBudget {
+            #resource : string
+            #getHeaderActions()
+          }
+          class "ListBudgets" as App_Resources_Budgets_Pages_ListBudgets {
+            #resource : string
+            #getHeaderActions()
+          }
+          class "CreateBudget" as App_Resources_Budgets_Pages_CreateBudget {
+            #resource : string
+          }
+        }
+      }
+      package Orders as App.Resources.Orders {
+        class "OrderResource" as App_Resources_Orders_OrderResource {
+          #model : ?string
+          #navigationIcon : string|BackedEnum|null
+          #activeNavigationIcon : string|BackedEnum|null
+          #navigationSort : ?int
+          {static} +getNavigationGroup()
+          {static} +getNavigationLabel()
+          {static} +getModelLabel()
+          {static} +form(schema)
+          {static} +infolist(schema)
+          {static} +table(table)
+          {static} +getRelations()
+          {static} +getPages()
+          {static} +getGlobalSearchEloquentQuery()
+          {static} +getGloballySearchableAttributes()
+          {static} +getGlobalSearchResultDetails(record)
+          {static} +getEloquentQuery()
+        }
+        package Tables as App.Resources.Orders.Tables {
+          class "OrdersTable" as App_Resources_Orders_Tables_OrdersTable {
+            {static} +table(table)
+          }
+        }
+        package Schemas as App.Resources.Orders.Schemas {
+          class "OrderForm" as App_Resources_Orders_Schemas_OrderForm {
+            {static} +configure(schema)
+          }
+          class "OrderInfolist" as App_Resources_Orders_Schemas_OrderInfolist {
+            {static} +configure(schema)
+          }
+        }
+        package RelationManagers as App.Resources.Orders.RelationManagers {
+          class "LinesRelationManager" as App_Resources_Orders_RelationManagers_LinesRelationManager {
+            #relationship : string
+            +form(schema)
+            +infolist(schema)
+            +table(table)
+          }
+        }
+        package Pages as App.Resources.Orders.Pages {
+          class "EditOrder" as App_Resources_Orders_Pages_EditOrder {
+            #resource : string
+            #getHeaderActions()
+          }
+          class "CreateOrder" as App_Resources_Orders_Pages_CreateOrder {
+            #resource : string
+            #mutateFormDataBeforeCreate(data)
+            #afterCreate()
+          }
+          class "ListOrders" as App_Resources_Orders_Pages_ListOrders {
+            #resource : string
+            #getHeaderActions()
+          }
+        }
+      }
+      package Categories as App.Resources.Categories {
+        class "CategoryResource" as App_Resources_Categories_CategoryResource {
+          #model : ?string
+          #recordTitleAttribute : ?string
+          #navigationIcon : string|BackedEnum|null
+          #activeNavigationIcon : string|BackedEnum|null
+          #navigationSort : ?int
+          {static} +getNavigationGroup()
+          {static} +getNavigationLabel()
+          {static} +getModelLabel()
+          {static} +form(schema)
+          {static} +table(table)
+          {static} +getRelations()
+          {static} +getPages()
+        }
+        package Tables as App.Resources.Categories.Tables {
+          class "CategoriesTable" as App_Resources_Categories_Tables_CategoriesTable {
+            {static} +configure(table)
+          }
+        }
+        package Schemas as App.Resources.Categories.Schemas {
+          class "CategoryForm" as App_Resources_Categories_Schemas_CategoryForm {
+            {static} +configure(schema)
+          }
+        }
+        package Pages as App.Resources.Categories.Pages {
+          class "ListCategories" as App_Resources_Categories_Pages_ListCategories {
+            #resource : string
+            #getHeaderActions()
+          }
+          class "CreateCategory" as App_Resources_Categories_Pages_CreateCategory {
+            #resource : string
+          }
+          class "EditCategory" as App_Resources_Categories_Pages_EditCategory {
+            #resource : string
+            #getHeaderActions()
+          }
+        }
+      }
+      package Services as App.Resources.Services {
+        class "ServiceResource" as App_Resources_Services_ServiceResource {
+          #model : ?string
+          #navigationIcon : string|BackedEnum|null
+          #activeNavigationIcon : string|BackedEnum|null
+          #recordTitleAttribute : ?string
+          #navigationSort : ?int
+          {static} +getNavigationGroup()
+          {static} +getNavigationLabel()
+          {static} +form(schema)
+          {static} +table(table)
+          {static} +getRelations()
+          {static} +getPages()
+        }
+        package Tables as App.Resources.Services.Tables {
+          class "ServicesTable" as App_Resources_Services_Tables_ServicesTable {
+            {static} +configure(table)
+          }
+        }
+        package Schemas as App.Resources.Services.Schemas {
+          class "ServiceForm" as App_Resources_Services_Schemas_ServiceForm {
+            {static} +configure(schema)
+          }
+        }
+        package Pages as App.Resources.Services.Pages {
+          class "ListServices" as App_Resources_Services_Pages_ListServices {
+            #resource : string
+            #getHeaderActions()
+          }
+          class "CreateService" as App_Resources_Services_Pages_CreateService {
+            #resource : string
+          }
+          class "EditService" as App_Resources_Services_Pages_EditService {
+            #resource : string
+            #getHeaderActions()
+          }
+        }
+      }
+    }
+  }
+  App_Resources_Budgets_BudgetResource ..> App_Resources_Budgets_Pages_CreateBudget
+  App_Resources_Budgets_BudgetResource ..> App_Resources_Budgets_Pages_EditBudget
+  App_Resources_Budgets_BudgetResource ..> App_Resources_Budgets_Pages_ListBudgets
+  App_Resources_Budgets_BudgetResource ..> App_Resources_Budgets_Schemas_BudgetForm
+  App_Resources_Budgets_BudgetResource ..> App_Resources_Budgets_Tables_BudgetsTable
+  App_Resources_Categories_CategoryResource ..> App_Resources_Categories_Pages_CreateCategory
+  App_Resources_Categories_CategoryResource ..> App_Resources_Categories_Pages_EditCategory
+  App_Resources_Categories_CategoryResource ..> App_Resources_Categories_Pages_ListCategories
+  App_Resources_Categories_CategoryResource ..> App_Resources_Categories_Schemas_CategoryForm
+  App_Resources_Categories_CategoryResource ..> App_Resources_Categories_Tables_CategoriesTable
+  App_Resources_Orders_OrderResource ..> App_Resources_Orders_Pages_CreateOrder
+  App_Resources_Orders_OrderResource ..> App_Resources_Orders_Pages_EditOrder
+  App_Resources_Orders_OrderResource ..> App_Resources_Orders_Pages_ListOrders
+  App_Resources_Orders_OrderResource ..> App_Resources_Orders_RelationManagers_LinesRelationManager
+  App_Resources_Orders_OrderResource ..> App_Resources_Orders_Schemas_OrderForm
+  App_Resources_Orders_OrderResource ..> App_Resources_Orders_Schemas_OrderInfolist
+  App_Resources_Orders_OrderResource ..> App_Resources_Orders_Tables_OrdersTable
+  App_Resources_Services_ServiceResource ..> App_Resources_Services_Pages_CreateService
+  App_Resources_Services_ServiceResource ..> App_Resources_Services_Pages_EditService
+  App_Resources_Services_ServiceResource ..> App_Resources_Services_Pages_ListServices
+  App_Resources_Services_ServiceResource ..> App_Resources_Services_Schemas_ServiceForm
+  App_Resources_Services_ServiceResource ..> App_Resources_Services_Tables_ServicesTable
+  App_Resources_Users_RelationManagers_OrdersRelationManager ..> App_Resources_Orders_OrderResource
+  App_Resources_Users_UserResource ..> App_Resources_Users_Pages_CreateUser
+  App_Resources_Users_UserResource ..> App_Resources_Users_Pages_EditUser
+  App_Resources_Users_UserResource ..> App_Resources_Users_Pages_ListUsers
+  App_Resources_Users_UserResource ..> App_Resources_Users_RelationManagers_OrdersRelationManager
+  App_Resources_Users_UserResource ..> App_Resources_Users_Schemas_UserForm
+  App_Resources_Users_UserResource ..> App_Resources_Users_Tables_UsersTable
+  App_Resources_VacationPeriods_VacationPeriodResource ..> App_Resources_VacationPeriods_Pages_CreateVacationPeriod
+  App_Resources_VacationPeriods_VacationPeriodResource ..> App_Resources_VacationPeriods_Pages_EditVacationPeriod
+  App_Resources_VacationPeriods_VacationPeriodResource ..> App_Resources_VacationPeriods_Pages_ListVacationPeriods
+  App_Resources_VacationPeriods_VacationPeriodResource ..> App_Resources_VacationPeriods_Schemas_VacationPeriodForm
+  App_Resources_VacationPeriods_VacationPeriodResource ..> App_Resources_VacationPeriods_Tables_VacationPeriodsTable
+@enduml

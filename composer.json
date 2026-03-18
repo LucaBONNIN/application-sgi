@@ -27,7 +27,8 @@
         "nunomaduro/collision": "^8.9",
         "phpunit/phpunit": "^11.5.3",
         "recca0120/laravel-erd": "^0.4",
-        "serversideup/spin": "^3.1"
+        "serversideup/spin": "^3.1",
+        "smeghead/php-class-diagram": "^1.6"
     },
     "autoload": {
         "psr-4": {
