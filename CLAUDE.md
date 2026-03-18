@@ -23,6 +23,8 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - phpunit/phpunit (PHPUNIT) - v11
 - tailwindcss (TAILWINDCSS) - v4
 
+This application is deployed using Spin Pro. All commands must be preceeded by `spin run`, followed by the target container name, then the command.
+
 ## Skills Activation
 
 This project has domain-specific skills available. You MUST activate the relevant skill whenever you work in that domain—don't wait until you're stuck.

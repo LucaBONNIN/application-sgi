@@ -13,6 +13,16 @@ class OrderLine extends Model implements Auditable
     /** @use HasFactory<\Database\Factories\OrderLineFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'order_id',
+        'category_id',
+        'reference',
+        'designation',
+        'quantity',
+        'unit_price',
+        'total_price',
+    ];
+
     public function order(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Order::class);

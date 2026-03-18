@@ -11,31 +11,41 @@ class OrderInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('id'),
+                TextEntry::make('id')
+                    ->label('#'),
 
-                TextEntry::make('user.name'),
+                TextEntry::make('user.name')
+                    ->label(__('filament/resources/order.fields.user')),
 
-                TextEntry::make('service.name'),
+                TextEntry::make('service.name')
+                    ->label(__('filament/resources/order.fields.service')),
 
-                TextEntry::make('supplier.name'),
+                TextEntry::make('supplier.name')
+                    ->label(__('filament/resources/order.fields.supplier')),
 
-                TextEntry::make('budget_id'),
+                TextEntry::make('budget.budgetName')
+                    ->label(__('filament/resources/order.fields.budget')),
 
-                TextEntry::make('status'),
+                TextEntry::make('status')
+                    ->label(__('filament/resources/order.fields.status'))
+                    ->badge(),
 
-                TextEntry::make('description'),
+                TextEntry::make('description')
+                    ->label(__('filament/resources/order.fields.description'))
+                    ->columnSpanFull(),
 
-                TextEntry::make('quotation_path'),
+                TextEntry::make('quotation_path')
+                    ->label(__('filament/resources/order.fields.quotation'))
+                    ->visible(fn ($record): bool => filled($record->quotation_path)),
 
                 TextEntry::make('estimated_delivery_date')
-                    ->dateTime(),
+                    ->label(__('filament/resources/order.fields.estimated_delivery_date'))
+                    ->date(),
 
                 TextEntry::make('created_at')
-                    ->label('Created Date')
                     ->dateTime(),
 
                 TextEntry::make('updated_at')
-                    ->label('Last Modified Date')
                     ->dateTime(),
             ]);
     }

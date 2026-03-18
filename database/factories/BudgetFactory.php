@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Service;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,9 @@ class BudgetFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'service_id' => Service::factory(),
+            'year' => (int) date('Y'),
+            'amount' => fake()->numberBetween(100000, 1000000),
         ];
     }
 }
