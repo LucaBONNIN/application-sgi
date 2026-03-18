@@ -18,6 +18,7 @@
     "require-dev": {
         "beyondcode/laravel-er-diagram-generator": "^5.0",
         "fakerphp/faker": "^1.24",
+        "laravel-lang/lang": "^15.29",
         "laravel/boost": "^2.3",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.29",
@@ -63,7 +64,8 @@
             "@php artisan filament:upgrade"
         ],
         "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
+            "@php artisan lang:update"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
