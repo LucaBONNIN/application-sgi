@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -20,7 +19,7 @@ class CategorySeeder extends Seeder
         foreach ($categories as $cat) {
             Category::factory()->create([
                 'name' => $cat,
-                'slug' => Str::slug($cat)
+                'slug' => Str::slug($cat),
             ]);
         }
     }

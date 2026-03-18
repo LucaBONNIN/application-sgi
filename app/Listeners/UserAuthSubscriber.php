@@ -4,8 +4,8 @@ namespace App\Listeners;
 
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
-use OwenIt\Auditing\Models\Audit;
 use Illuminate\Events\Dispatcher;
+use OwenIt\Auditing\Models\Audit;
 
 class UserAuthSubscriber
 {

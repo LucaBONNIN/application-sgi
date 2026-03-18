@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\Service;
 use App\Models\User;
+use BezhanSalleh\FilamentShield\Support\Utils;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use BezhanSalleh\FilamentShield\Support\Utils;
 
 class UserSeeder extends Seeder
 {

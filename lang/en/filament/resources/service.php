@@ -2,5 +2,5 @@
 
 return [
     'navigation_label' => 'Services',
-    'label' => 'Service'
+    'label' => 'Service',
 ];

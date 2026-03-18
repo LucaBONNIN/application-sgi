@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Budget;
 use App\Models\Service;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ServiceSeeder extends Seeder
@@ -20,7 +19,7 @@ class ServiceSeeder extends Seeder
             'SVT',
             'Lettres',
             'Vie Scolaire',
-            'Administration'
+            'Administration',
         ];
 
         foreach ($services as $name) {

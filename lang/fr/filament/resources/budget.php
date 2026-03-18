@@ -2,5 +2,5 @@
 
 return [
     'navigation_label' => 'Budgets',
-    'label' => 'Budget'
+    'label' => 'Budget',
 ];

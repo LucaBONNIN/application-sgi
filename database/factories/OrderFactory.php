@@ -3,13 +3,14 @@
 namespace Database\Factories;
 
 use App\Enums\OrderStatus;
+use App\Models\Order;
 use App\Models\Service;
 use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Order>
+ * @extends Factory<Order>
  */
 class OrderFactory extends Factory
 {

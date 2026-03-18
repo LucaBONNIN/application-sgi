@@ -32,7 +32,7 @@ class OrderCreated extends Notification implements ShouldQueue
         return (new MailMessage)
             ->subject("Nouvelle demande #{$this->order->id}")
             ->greeting("Bonjour {$notifiable->name},")
-            ->line("Une nouvelle demande de commande a été créée.")
+            ->line('Une nouvelle demande de commande a été créée.')
             ->line("**Demandeur :** {$this->order->user->name}")
             ->line("**Service :** {$this->order->service->name}")
             ->line("**Fournisseur :** {$this->order->supplier->name}")

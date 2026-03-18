@@ -58,19 +58,19 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function adminCanViewAnyOrders(): void
+    public function admin_can_view_any_orders(): void
     {
         $this->assertTrue($this->policy->viewAny($this->admin));
     }
 
     #[Test]
-    public function demandeurCanViewAnyOrders(): void
+    public function demandeur_can_view_any_orders(): void
     {
         $this->assertTrue($this->policy->viewAny($this->demandeur));
     }
 
     #[Test]
-    public function adminCanViewAnyOrder(): void
+    public function admin_can_view_any_order(): void
     {
         $order = Order::factory()->sent()->create();
 
@@ -78,7 +78,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function demandeurCanViewOwnOrder(): void
+    public function demandeur_can_view_own_order(): void
     {
         $order = Order::factory()->sent()->create(['user_id' => $this->demandeur->id]);
 
@@ -86,7 +86,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function demandeurCannotViewOthersOrder(): void
+    public function demandeur_cannot_view_others_order(): void
     {
         $order = Order::factory()->sent()->create();
 
@@ -94,19 +94,19 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function adminCanCreateOrders(): void
+    public function admin_can_create_orders(): void
     {
         $this->assertTrue($this->policy->create($this->admin));
     }
 
     #[Test]
-    public function demandeurCanCreateOrders(): void
+    public function demandeur_can_create_orders(): void
     {
         $this->assertTrue($this->policy->create($this->demandeur));
     }
 
     #[Test]
-    public function adminCanUpdateAnyOrder(): void
+    public function admin_can_update_any_order(): void
     {
         $order = Order::factory()->processing()->create();
 
@@ -114,7 +114,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function demandeurCanUpdateOwnOrderInSentStatus(): void
+    public function demandeur_can_update_own_order_in_sent_status(): void
     {
         $order = Order::factory()->sent()->create(['user_id' => $this->demandeur->id]);
 
@@ -122,7 +122,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function demandeurCannotUpdateOwnOrderInProcessingStatus(): void
+    public function demandeur_cannot_update_own_order_in_processing_status(): void
     {
         $order = Order::factory()->processing()->create(['user_id' => $this->demandeur->id]);
 
@@ -130,7 +130,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function demandeurCannotUpdateOthersOrder(): void
+    public function demandeur_cannot_update_others_order(): void
     {
         $order = Order::factory()->sent()->create();
 
@@ -138,7 +138,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function adminCanCancelNonTerminalOrder(): void
+    public function admin_can_cancel_non_terminal_order(): void
     {
         foreach ([OrderStatus::Sent, OrderStatus::Processing, OrderStatus::Ordered, OrderStatus::Received] as $status) {
             $order = Order::factory()->create(['status' => $status]);
@@ -148,7 +148,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function adminCannotCancelTerminalOrder(): void
+    public function admin_cannot_cancel_terminal_order(): void
     {
         foreach ([OrderStatus::Closed, OrderStatus::Cancelled] as $status) {
             $order = Order::factory()->create(['status' => $status]);
@@ -158,7 +158,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function demandeurCanCancelOwnSentOrder(): void
+    public function demandeur_can_cancel_own_sent_order(): void
     {
         $order = Order::factory()->sent()->create(['user_id' => $this->demandeur->id]);
 
@@ -166,7 +166,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function demandeurCannotCancelOwnProcessingOrder(): void
+    public function demandeur_cannot_cancel_own_processing_order(): void
     {
         $order = Order::factory()->processing()->create(['user_id' => $this->demandeur->id]);
 
@@ -174,7 +174,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function demandeurCannotCancelOthersOrder(): void
+    public function demandeur_cannot_cancel_others_order(): void
     {
         $order = Order::factory()->sent()->create();
 
@@ -182,7 +182,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function adminCanProcessSentOrder(): void
+    public function admin_can_process_sent_order(): void
     {
         $order = Order::factory()->sent()->create();
 
@@ -190,7 +190,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function adminCannotProcessNonSentOrder(): void
+    public function admin_cannot_process_non_sent_order(): void
     {
         $order = Order::factory()->processing()->create();
 
@@ -198,7 +198,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function demandeurCannotProcessOrder(): void
+    public function demandeur_cannot_process_order(): void
     {
         $order = Order::factory()->sent()->create(['user_id' => $this->demandeur->id]);
 
@@ -206,7 +206,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function adminCanMarkProcessingOrderAsOrdered(): void
+    public function admin_can_mark_processing_order_as_ordered(): void
     {
         $order = Order::factory()->processing()->create();
 
@@ -214,7 +214,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function adminCannotMarkSentOrderAsOrdered(): void
+    public function admin_cannot_mark_sent_order_as_ordered(): void
     {
         $order = Order::factory()->sent()->create();
 
@@ -222,7 +222,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function demandeurCannotMarkOrdered(): void
+    public function demandeur_cannot_mark_ordered(): void
     {
         $order = Order::factory()->processing()->create(['user_id' => $this->demandeur->id]);
 
@@ -230,7 +230,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function adminCanMarkOrderedAsReceived(): void
+    public function admin_can_mark_ordered_as_received(): void
     {
         $order = Order::factory()->ordered()->create();
 
@@ -238,7 +238,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function adminCannotMarkSentAsReceived(): void
+    public function admin_cannot_mark_sent_as_received(): void
     {
         $order = Order::factory()->sent()->create();
 
@@ -246,7 +246,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function demandeurCannotMarkReceived(): void
+    public function demandeur_cannot_mark_received(): void
     {
         $order = Order::factory()->ordered()->create(['user_id' => $this->demandeur->id]);
 
@@ -254,7 +254,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function adminCanCloseReceivedOrder(): void
+    public function admin_can_close_received_order(): void
     {
         $order = Order::factory()->received()->create();
 
@@ -262,7 +262,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function adminCannotCloseNonReceivedOrder(): void
+    public function admin_cannot_close_non_received_order(): void
     {
         $order = Order::factory()->ordered()->create();
 
@@ -270,7 +270,7 @@ class OrderPolicyTest extends TestCase
     }
 
     #[Test]
-    public function demandeurCannotCloseOrder(): void
+    public function demandeur_cannot_close_order(): void
     {
         $order = Order::factory()->received()->create(['user_id' => $this->demandeur->id]);
 

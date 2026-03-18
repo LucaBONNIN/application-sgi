@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 class OrderStatusTest extends TestCase
 {
     #[Test]
-    public function sentCanTransitionToProcessingAndCancelled(): void
+    public function sent_can_transition_to_processing_and_cancelled(): void
     {
         $status = OrderStatus::Sent;
 
@@ -21,7 +21,7 @@ class OrderStatusTest extends TestCase
     }
 
     #[Test]
-    public function processingCanTransitionToOrderedAndCancelled(): void
+    public function processing_can_transition_to_ordered_and_cancelled(): void
     {
         $status = OrderStatus::Processing;
 
@@ -33,7 +33,7 @@ class OrderStatusTest extends TestCase
     }
 
     #[Test]
-    public function orderedCanTransitionToReceivedAndCancelled(): void
+    public function ordered_can_transition_to_received_and_cancelled(): void
     {
         $status = OrderStatus::Ordered;
 
@@ -45,7 +45,7 @@ class OrderStatusTest extends TestCase
     }
 
     #[Test]
-    public function receivedCanTransitionToClosedAndCancelled(): void
+    public function received_can_transition_to_closed_and_cancelled(): void
     {
         $status = OrderStatus::Received;
 
@@ -57,7 +57,7 @@ class OrderStatusTest extends TestCase
     }
 
     #[Test]
-    public function closedIsTerminalAndHasNoTransitions(): void
+    public function closed_is_terminal_and_has_no_transitions(): void
     {
         $status = OrderStatus::Closed;
 
@@ -68,7 +68,7 @@ class OrderStatusTest extends TestCase
     }
 
     #[Test]
-    public function cancelledIsTerminalAndHasNoTransitions(): void
+    public function cancelled_is_terminal_and_has_no_transitions(): void
     {
         $status = OrderStatus::Cancelled;
 
@@ -79,7 +79,7 @@ class OrderStatusTest extends TestCase
     }
 
     #[Test]
-    public function nonTerminalStatusesAreNotTerminal(): void
+    public function non_terminal_statuses_are_not_terminal(): void
     {
         $this->assertFalse(OrderStatus::Sent->isTerminal());
         $this->assertFalse(OrderStatus::Processing->isTerminal());

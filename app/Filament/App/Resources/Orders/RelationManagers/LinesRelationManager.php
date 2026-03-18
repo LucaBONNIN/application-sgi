@@ -86,11 +86,11 @@ class LinesRelationManager extends RelationManager
 
                 TextEntry::make('unit_price')
                     ->label(__('filament/resources/order.fields.lines.unit_price'))
-                    ->formatStateUsing(fn ($state): string => number_format($state / 100, 2, ',', ' ') . ' €'),
+                    ->formatStateUsing(fn ($state): string => number_format($state / 100, 2, ',', ' ').' €'),
 
                 TextEntry::make('total_price')
                     ->label(__('filament/resources/order.fields.lines.total_price'))
-                    ->formatStateUsing(fn ($state): string => number_format($state / 100, 2, ',', ' ') . ' €'),
+                    ->formatStateUsing(fn ($state): string => number_format($state / 100, 2, ',', ' ').' €'),
 
                 TextEntry::make('created_at')
                     ->dateTime(),
@@ -124,11 +124,11 @@ class LinesRelationManager extends RelationManager
 
                 TextColumn::make('unit_price')
                     ->label(__('filament/resources/order.fields.lines.unit_price'))
-                    ->formatStateUsing(fn ($state): string => number_format($state / 100, 2, ',', ' ') . ' €'),
+                    ->formatStateUsing(fn ($state): string => number_format($state / 100, 2, ',', ' ').' €'),
 
                 TextColumn::make('total_price')
                     ->label(__('filament/resources/order.fields.lines.total_price'))
-                    ->formatStateUsing(fn ($state): string => number_format($state / 100, 2, ',', ' ') . ' €'),
+                    ->formatStateUsing(fn ($state): string => number_format($state / 100, 2, ',', ' ').' €'),
             ])
             ->headerActions([
                 CreateAction::make()->visible($canModify),

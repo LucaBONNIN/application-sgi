@@ -7,7 +7,6 @@ use App\Models\Order;
 use App\Models\OrderLine;
 use App\Models\Supplier;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class OrderSeeder extends Seeder
@@ -21,7 +20,9 @@ class OrderSeeder extends Seeder
         $categories = Category::all();
         $users = User::all();
 
-        if ($users->isEmpty() || $suppliers->isEmpty()) return;
+        if ($users->isEmpty() || $suppliers->isEmpty()) {
+            return;
+        }
 
         foreach ($users as $user) {
             foreach ($user->services as $service) {

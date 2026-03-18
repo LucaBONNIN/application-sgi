@@ -4,7 +4,6 @@ namespace Tests\Feature\Filament\Orders;
 
 use App\Enums\OrderStatus;
 use App\Filament\App\Resources\Orders\Pages\CreateOrder;
-use App\Models\Category;
 use App\Models\Order;
 use App\Models\Service;
 use App\Models\Supplier;
@@ -61,7 +60,7 @@ class CreateOrderTest extends TestCase
     }
 
     #[Test]
-    public function demandeurCanLoadCreatePage(): void
+    public function demandeur_can_load_create_page(): void
     {
         $this->actingAs($this->demandeur);
 
@@ -70,7 +69,7 @@ class CreateOrderTest extends TestCase
     }
 
     #[Test]
-    public function demandeurCanCreateOrderWithLines(): void
+    public function demandeur_can_create_order_with_lines(): void
     {
         Notification::fake();
 
@@ -103,7 +102,7 @@ class CreateOrderTest extends TestCase
     }
 
     #[Test]
-    public function demandeurUserIdIsAutoFilled(): void
+    public function demandeur_user_id_is_auto_filled(): void
     {
         Notification::fake();
 
@@ -129,7 +128,7 @@ class CreateOrderTest extends TestCase
     }
 
     #[Test]
-    public function statusDefaultsToSent(): void
+    public function status_defaults_to_sent(): void
     {
         Notification::fake();
 
@@ -155,7 +154,7 @@ class CreateOrderTest extends TestCase
     }
 
     #[Test]
-    public function adminIsNotifiedWhenDemandeurCreatesOrder(): void
+    public function admin_is_notified_when_demandeur_creates_order(): void
     {
         Notification::fake();
 
@@ -179,7 +178,7 @@ class CreateOrderTest extends TestCase
     }
 
     #[Test]
-    public function supplierIsRequired(): void
+    public function supplier_is_required(): void
     {
         $this->actingAs($this->demandeur);
 
@@ -199,7 +198,7 @@ class CreateOrderTest extends TestCase
     }
 
     #[Test]
-    public function designationIsRequired(): void
+    public function designation_is_required(): void
     {
         $this->actingAs($this->demandeur);
 

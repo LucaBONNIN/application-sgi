@@ -18,7 +18,7 @@ class VacationPeriodFactory extends Factory
     public function definition(): array
     {
         $startDate = fake()->dateTimeBetween('-6 months', '+6 months');
-        $endDate = (clone $startDate)->modify('+' . fake()->numberBetween(7, 16) . ' days');
+        $endDate = (clone $startDate)->modify('+'.fake()->numberBetween(7, 16).' days');
 
         return [
             'name' => fake()->words(3, true),

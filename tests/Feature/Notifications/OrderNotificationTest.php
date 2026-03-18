@@ -17,7 +17,7 @@ class OrderNotificationTest extends TestCase
     use RefreshDatabase;
 
     #[Test]
-    public function orderCreatedNotificationContainsCorrectContent(): void
+    public function order_created_notification_contains_correct_content(): void
     {
         $order = Order::factory()->sent()->create();
         $order->load(['user', 'service', 'supplier']);
@@ -34,7 +34,7 @@ class OrderNotificationTest extends TestCase
     }
 
     #[Test]
-    public function orderCreatedNotificationUsesMailChannel(): void
+    public function order_created_notification_uses_mail_channel(): void
     {
         $order = Order::factory()->sent()->create();
         $order->load(['user', 'service', 'supplier']);
@@ -45,7 +45,7 @@ class OrderNotificationTest extends TestCase
     }
 
     #[Test]
-    public function orderCreatedToArrayContainsOrderId(): void
+    public function order_created_to_array_contains_order_id(): void
     {
         $order = Order::factory()->sent()->create();
         $order->load(['user', 'service', 'supplier']);
@@ -58,7 +58,7 @@ class OrderNotificationTest extends TestCase
     }
 
     #[Test]
-    public function orderStatusChangedNotificationContainsCorrectContent(): void
+    public function order_status_changed_notification_contains_correct_content(): void
     {
         $order = Order::factory()->processing()->create();
         $order->load(['user', 'service', 'supplier']);
@@ -73,7 +73,7 @@ class OrderNotificationTest extends TestCase
     }
 
     #[Test]
-    public function orderStatusChangedNotificationUsesMailChannel(): void
+    public function order_status_changed_notification_uses_mail_channel(): void
     {
         $order = Order::factory()->processing()->create();
         $order->load(['user', 'service', 'supplier']);
@@ -84,7 +84,7 @@ class OrderNotificationTest extends TestCase
     }
 
     #[Test]
-    public function orderStatusChangedToArrayContainsStatusInfo(): void
+    public function order_status_changed_to_array_contains_status_info(): void
     {
         $order = Order::factory()->processing()->create();
         $order->load(['user', 'service', 'supplier']);

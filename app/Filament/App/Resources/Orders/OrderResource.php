@@ -2,6 +2,9 @@
 
 namespace App\Filament\App\Resources\Orders;
 
+use App\Filament\App\Resources\Orders\Pages\CreateOrder;
+use App\Filament\App\Resources\Orders\Pages\EditOrder;
+use App\Filament\App\Resources\Orders\Pages\ListOrders;
 use App\Filament\App\Resources\Orders\RelationManagers\LinesRelationManager;
 use App\Filament\App\Resources\Orders\Schemas\OrderForm;
 use App\Filament\App\Resources\Orders\Schemas\OrderInfolist;
@@ -14,13 +17,13 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use UnitEnum;
 
 class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedInboxArrowDown;
+
     protected static string|BackedEnum|null $activeNavigationIcon = Heroicon::InboxArrowDown;
 
     protected static ?int $navigationSort = 1;
@@ -58,16 +61,16 @@ class OrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            LinesRelationManager::class
+            LinesRelationManager::class,
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => \App\Filament\App\Resources\Orders\Pages\ListOrders::route('/'),
-            'create' => \App\Filament\App\Resources\Orders\Pages\CreateOrder::route('/create'),
-            'edit' => \App\Filament\App\Resources\Orders\Pages\EditOrder::route('/{record}/edit'),
+            'index' => ListOrders::route('/'),
+            'create' => CreateOrder::route('/create'),
+            'edit' => EditOrder::route('/{record}/edit'),
         ];
     }
 
@@ -85,7 +88,7 @@ class OrderResource extends Resource
     }
 
     /**
-     * @param Order $record
+     * @param  Order  $record
      */
     public static function getGlobalSearchResultDetails(Model $record): array
     {

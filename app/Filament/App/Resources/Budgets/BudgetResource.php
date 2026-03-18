@@ -19,7 +19,9 @@ class BudgetResource extends Resource
     protected static ?string $model = Budget::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBanknotes;
+
     protected static string|BackedEnum|null $activeNavigationIcon = Heroicon::Banknotes;
+
     protected static ?int $navigationSort = 3;
 
     public static function getNavigationGroup(): ?string

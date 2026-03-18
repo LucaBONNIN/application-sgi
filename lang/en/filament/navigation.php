@@ -3,6 +3,6 @@
 return [
     'groups' => [
         'admin' => 'Administration',
-        'orders' => 'Orders'
-    ]
+        'orders' => 'Orders',
+    ],
 ];

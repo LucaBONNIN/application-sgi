@@ -53,7 +53,7 @@ class ListOrdersTest extends TestCase
     }
 
     #[Test]
-    public function adminCanLoadListPage(): void
+    public function admin_can_load_list_page(): void
     {
         $this->actingAs($this->admin);
 
@@ -62,7 +62,7 @@ class ListOrdersTest extends TestCase
     }
 
     #[Test]
-    public function demandeurCanLoadListPage(): void
+    public function demandeur_can_load_list_page(): void
     {
         $this->actingAs($this->demandeur);
 
@@ -71,7 +71,7 @@ class ListOrdersTest extends TestCase
     }
 
     #[Test]
-    public function adminSeesAllOrders(): void
+    public function admin_sees_all_orders(): void
     {
         $ownOrder = Order::factory()->sent()->create(['user_id' => $this->admin->id]);
         $demandeurOrder = Order::factory()->sent()->create(['user_id' => $this->demandeur->id]);
@@ -84,7 +84,7 @@ class ListOrdersTest extends TestCase
     }
 
     #[Test]
-    public function demandeurSeesOnlyOwnOrders(): void
+    public function demandeur_sees_only_own_orders(): void
     {
         $ownOrder = Order::factory()->sent()->create(['user_id' => $this->demandeur->id]);
         $otherOrder = Order::factory()->sent()->create(['user_id' => $this->otherDemandeur->id]);
@@ -97,7 +97,7 @@ class ListOrdersTest extends TestCase
     }
 
     #[Test]
-    public function canFilterByStatus(): void
+    public function can_filter_by_status(): void
     {
         $sentOrder = Order::factory()->sent()->create(['user_id' => $this->admin->id]);
         $processingOrder = Order::factory()->processing()->create(['user_id' => $this->admin->id]);

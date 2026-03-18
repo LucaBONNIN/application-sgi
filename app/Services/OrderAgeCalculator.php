@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\VacationPeriod;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 
 class OrderAgeCalculator
 {
@@ -37,7 +38,7 @@ class OrderAgeCalculator
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Collection<int, VacationPeriod>  $vacationPeriods
+     * @param  Collection<int, VacationPeriod>  $vacationPeriods
      */
     private function isInVacation(Carbon $date, $vacationPeriods): bool
     {

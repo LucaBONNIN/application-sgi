@@ -23,7 +23,7 @@ class OrderAgeCalculatorTest extends TestCase
     }
 
     #[Test]
-    public function countsWeekdaysOnly(): void
+    public function counts_weekdays_only(): void
     {
         // Monday 2026-03-16 to Friday 2026-03-20 = 4 business days (Mon, Tue, Wed, Thu)
         $from = Carbon::parse('2026-03-16'); // Monday
@@ -33,7 +33,7 @@ class OrderAgeCalculatorTest extends TestCase
     }
 
     #[Test]
-    public function excludesWeekends(): void
+    public function excludes_weekends(): void
     {
         // Monday 2026-03-16 to Monday 2026-03-23 = 5 business days (Mon-Fri, skip Sat+Sun)
         $from = Carbon::parse('2026-03-16');
@@ -43,7 +43,7 @@ class OrderAgeCalculatorTest extends TestCase
     }
 
     #[Test]
-    public function returnsZeroWhenFromEqualsTo(): void
+    public function returns_zero_when_from_equals_to(): void
     {
         $date = Carbon::parse('2026-03-18');
 
@@ -51,7 +51,7 @@ class OrderAgeCalculatorTest extends TestCase
     }
 
     #[Test]
-    public function returnsZeroWhenFromIsAfterTo(): void
+    public function returns_zero_when_from_is_after_to(): void
     {
         $from = Carbon::parse('2026-03-20');
         $to = Carbon::parse('2026-03-18');
@@ -60,7 +60,7 @@ class OrderAgeCalculatorTest extends TestCase
     }
 
     #[Test]
-    public function excludesVacationPeriods(): void
+    public function excludes_vacation_periods(): void
     {
         // Create a vacation period covering Wed-Fri
         VacationPeriod::factory()->create([
@@ -80,7 +80,7 @@ class OrderAgeCalculatorTest extends TestCase
     }
 
     #[Test]
-    public function excludesVacationPeriodsOverlappingWeekends(): void
+    public function excludes_vacation_periods_overlapping_weekends(): void
     {
         // Vacation covering an entire week including weekend
         VacationPeriod::factory()->create([
@@ -100,7 +100,7 @@ class OrderAgeCalculatorTest extends TestCase
     }
 
     #[Test]
-    public function handlesMultipleVacationPeriods(): void
+    public function handles_multiple_vacation_periods(): void
     {
         VacationPeriod::factory()->create([
             'name' => 'Vacances 1',
@@ -128,7 +128,7 @@ class OrderAgeCalculatorTest extends TestCase
     }
 
     #[Test]
-    public function countsCorrectlyWhenNoVacationPeriods(): void
+    public function counts_correctly_when_no_vacation_periods(): void
     {
         // Two full weeks: 10 business days
         $from = Carbon::parse('2026-03-16'); // Monday
@@ -138,7 +138,7 @@ class OrderAgeCalculatorTest extends TestCase
     }
 
     #[Test]
-    public function startingOnWeekendSkipsToNextWeekday(): void
+    public function starting_on_weekend_skips_to_next_weekday(): void
     {
         // Saturday to Monday = 0 business days (Saturday and Sunday are skipped)
         $from = Carbon::parse('2026-03-21'); // Saturday

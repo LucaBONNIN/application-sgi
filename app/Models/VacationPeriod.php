@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Database\Factories\VacationPeriodFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,10 +11,10 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class VacationPeriod extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable;
-
-    /** @use HasFactory<\Database\Factories\VacationPeriodFactory> */
+    /** @use HasFactory<VacationPeriodFactory> */
     use HasFactory;
+
+    use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'name',

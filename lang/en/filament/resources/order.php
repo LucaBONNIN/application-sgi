@@ -30,7 +30,7 @@ return [
             'quantity' => 'Quantity',
             'unit_price' => 'Unit Price (cents)',
             'total_price' => 'Total Price (cents)',
-            'add_action' => 'Add a product'
+            'add_action' => 'Add a product',
         ],
     ],
 

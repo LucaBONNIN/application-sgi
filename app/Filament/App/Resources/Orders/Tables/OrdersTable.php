@@ -44,7 +44,7 @@ class OrdersTable
                     ->label(__('filament/resources/order.fields.total_amount'))
                     ->sum('lines', 'total_price')
                     ->numeric()
-                    ->formatStateUsing(fn ($state): string => number_format($state / 100, 2, ',', ' ') . ' €'),
+                    ->formatStateUsing(fn ($state): string => number_format($state / 100, 2, ',', ' ').' €'),
 
                 TextColumn::make('age')
                     ->label(__('filament/resources/order.fields.age'))

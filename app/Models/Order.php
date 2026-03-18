@@ -3,17 +3,19 @@
 namespace App\Models;
 
 use App\Enums\OrderStatus;
+use Database\Factories\OrderFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Order extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable;
-
-    /** @use HasFactory<\Database\Factories\OrderFactory> */
+    /** @use HasFactory<OrderFactory> */
     use HasFactory;
 
+    use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'user_id',
@@ -37,27 +39,27 @@ class Order extends Model implements Auditable
         ];
     }
 
-    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function service(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function service(): BelongsTo
     {
         return $this->belongsTo(Service::class);
     }
 
-    public function supplier(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function supplier(): BelongsTo
     {
         return $this->belongsTo(Supplier::class);
     }
 
-    public function budget(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function budget(): BelongsTo
     {
         return $this->belongsTo(Budget::class);
     }
 
-    public function lines(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function lines(): HasMany
     {
         return $this->hasMany(OrderLine::class);
     }

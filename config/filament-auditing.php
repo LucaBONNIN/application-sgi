@@ -1,6 +1,6 @@
 <?php
 
-use Tapp\FilamentAuditing\Filament\Resources\Audits\AuditResource;
+use App\Filament\App\Resources\AuditResource;
 
 return [
 
@@ -40,7 +40,7 @@ return [
     ],
 
     'resources' => [
-        'AuditResource' => \App\Filament\App\Resources\AuditResource::class,
+        'AuditResource' => AuditResource::class,
     ],
 
     'tenancy' => [

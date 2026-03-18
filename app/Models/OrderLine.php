@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
+use Database\Factories\OrderLineFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class OrderLine extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable;
-
-    /** @use HasFactory<\Database\Factories\OrderLineFactory> */
+    /** @use HasFactory<OrderLineFactory> */
     use HasFactory;
+
+    use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'order_id',
@@ -23,12 +25,12 @@ class OrderLine extends Model implements Auditable
         'total_price',
     ];
 
-    public function order(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
     }
 
-    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }

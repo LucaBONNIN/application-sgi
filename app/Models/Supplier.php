@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
+use Database\Factories\SupplierFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Supplier extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable;
-
-    /** @use HasFactory<\Database\Factories\SupplierFactory> */
+    /** @use HasFactory<SupplierFactory> */
     use HasFactory;
 
-    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    use \OwenIt\Auditing\Auditable;
+
+    public function orders(): HasMany
     {
         // Orders made to this supplier
         return $this->hasMany(Order::class);
