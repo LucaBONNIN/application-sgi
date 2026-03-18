@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use Illuminate\Foundation\Auth\User as AuthUser;
+use App\Enums\OrderStatus;
 use App\Models\Order;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Foundation\Auth\User as AuthUser;
 
 class OrderPolicy
 {
@@ -19,7 +20,7 @@ class OrderPolicy
 
     public function view(AuthUser $authUser, Order $order): bool
     {
-        if (!$authUser->can('View:Order')) {
+        if (! $authUser->can('View:Order')) {
             return false;
         }
 
@@ -37,20 +38,22 @@ class OrderPolicy
 
     public function update(AuthUser $authUser, Order $order): bool
     {
-        if (!$authUser->can('Update:Order')) {
+        if (! $authUser->can('Update:Order')) {
             return false;
         }
 
-        if ($authUser->id === $order->user_id) {
+        if ($authUser->can('BypassOwnership:Order')) {
             return true;
         }
 
-        return $authUser->can('BypassOwnership:Order');
+        // Demandeurs can only edit their own orders while in Sent status
+        return $authUser->id === $order->user_id
+            && $order->status === OrderStatus::Sent;
     }
 
     public function delete(AuthUser $authUser, Order $order): bool
     {
-        if (!$authUser->can('Delete:Order')) {
+        if (! $authUser->can('Delete:Order')) {
             return false;
         }
 
@@ -63,7 +66,7 @@ class OrderPolicy
 
     public function restore(AuthUser $authUser, Order $order): bool
     {
-        if (!$authUser->can('Restore:Order')) {
+        if (! $authUser->can('Restore:Order')) {
             return false;
         }
 
@@ -76,7 +79,7 @@ class OrderPolicy
 
     public function forceDelete(AuthUser $authUser, Order $order): bool
     {
-        if (!$authUser->can('ForceDelete:Order')) {
+        if (! $authUser->can('ForceDelete:Order')) {
             return false;
         }
 
@@ -107,4 +110,58 @@ class OrderPolicy
         return $authUser->can('Reorder:Order');
     }
 
+    /**
+     * Determine if the user can cancel the order.
+     */
+    public function cancel(AuthUser $authUser, Order $order): bool
+    {
+        if ($order->status->isTerminal()) {
+            return false;
+        }
+
+        // Admin can cancel any non-terminal order
+        if ($authUser->can('BypassOwnership:Order')) {
+            return true;
+        }
+
+        // Demandeur can only cancel their own orders in Sent status
+        return $authUser->id === $order->user_id
+            && $order->status === OrderStatus::Sent;
+    }
+
+    /**
+     * Determine if the user can transition the order to Processing.
+     */
+    public function processOrder(AuthUser $authUser, Order $order): bool
+    {
+        return $authUser->can('BypassOwnership:Order')
+            && $order->status->canTransitionTo(OrderStatus::Processing);
+    }
+
+    /**
+     * Determine if the user can transition the order to Ordered.
+     */
+    public function markOrdered(AuthUser $authUser, Order $order): bool
+    {
+        return $authUser->can('BypassOwnership:Order')
+            && $order->status->canTransitionTo(OrderStatus::Ordered);
+    }
+
+    /**
+     * Determine if the user can transition the order to Received.
+     */
+    public function markReceived(AuthUser $authUser, Order $order): bool
+    {
+        return $authUser->can('BypassOwnership:Order')
+            && $order->status->canTransitionTo(OrderStatus::Received);
+    }
+
+    /**
+     * Determine if the user can transition the order to Closed.
+     */
+    public function closeOrder(AuthUser $authUser, Order $order): bool
+    {
+        return $authUser->can('BypassOwnership:Order')
+            && $order->status->canTransitionTo(OrderStatus::Closed);
+    }
 }

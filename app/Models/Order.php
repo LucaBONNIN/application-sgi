@@ -17,18 +17,23 @@ class Order extends Model implements Auditable
 
     protected $fillable = [
         'user_id',
-        'description'
+        'service_id',
+        'supplier_id',
+        'budget_id',
+        'status',
+        'description',
+        'quotation_path',
+        'estimated_delivery_date',
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
      * @return array<string, string>
      */
     protected function casts(): array
     {
         return [
             'status' => OrderStatus::class,
+            'estimated_delivery_date' => 'date',
         ];
     }
 
@@ -52,7 +57,7 @@ class Order extends Model implements Auditable
         return $this->belongsTo(Budget::class);
     }
 
-    public function lines(): Order|\Illuminate\Database\Eloquent\Relations\HasMany
+    public function lines(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(OrderLine::class);
     }

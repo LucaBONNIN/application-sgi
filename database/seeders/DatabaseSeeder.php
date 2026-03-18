@@ -15,11 +15,12 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            // Independant
+            // Independent
             ShieldSeeder::class,
             CategorySeeder::class,
             SupplierSeeder::class,
             ServiceSeeder::class, // also creates Budgets
+            VacationPeriodSeeder::class,
             UserSeeder::class, // depends on ServiceSeeder
             OrderSeeder::class, // depends on everything else, also creates OrderLines
         ]);
