@@ -23,13 +23,14 @@ return [
         'age' => 'Ancienneté (jours ouvrés)',
 
         'lines' => [
-            'label' => 'Ligne de commande',
+            'label' => 'Produits demandés',
             'category' => 'Catégorie',
             'reference' => 'Référence',
             'designation' => 'Désignation',
             'quantity' => 'Quantité',
             'unit_price' => 'Prix unitaire (centimes)',
             'total_price' => 'Prix total (centimes)',
+            'add_action' => 'Ajouter un produit'
         ],
     ],
 

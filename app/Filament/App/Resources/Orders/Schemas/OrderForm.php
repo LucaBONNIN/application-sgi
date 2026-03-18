@@ -113,6 +113,7 @@ class OrderForm
                     ->components([
                         Repeater::make('lines')
                             ->label(__('filament/resources/order.fields.lines.label'))
+                            ->addActionLabel(__('filament/resources/order.fields.lines.add_action'))
                             ->relationship()
                             ->minItems(1)
                             ->defaultItems(1)
