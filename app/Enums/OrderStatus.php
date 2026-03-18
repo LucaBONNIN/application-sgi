@@ -2,13 +2,14 @@
 
 namespace App\Enums;
 
+use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasDescription;
 use Filament\Support\Contracts\HasIcon;
 use Filament\Support\Contracts\HasLabel;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Support\Htmlable;
 
-enum OrderStatus: int implements HasDescription, HasIcon, HasLabel
+enum OrderStatus: int implements HasColor, HasDescription, HasIcon, HasLabel
 {
     case Sent = 1;
     case Processing = 2;
