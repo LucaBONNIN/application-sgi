@@ -1,0 +1,35 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+@import '../../../../vendor/guava/calendar/resources/css/theme.css';
+
+@source '../../../../app/Filament/App/**/*';
+@source '../../../../resources/views/filament/app/**/*';
+@source '../../../../vendor/guava/calendar/resources/**/*';
+
+/* Mode clair */
+.ec-header, .ec-col-head, .ec-body, .ec-day, .ec-main, .ec-grid {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-color: #dddddd !important;
+}
+
+/* Mode sombre */
+
+html.dark .ec-header,
+html.dark .ec-col-head,
+html.dark .ec-body,
+html.dark .ec-day,
+html.dark .ec-main,
+html.dark .ec-grid {
+    background-color: transparent !important;
+    color: #ffffff !important;
+    border-color: #333333 !important;
+}
+
+html.dark .ec-list,
+html.dark .ec-list-day,
+html.dark .ec-list-event,
+html.dark .ec-no-events {
+    background-color: transparent !important;
+    color: #ffffff !important;
+    border-color: #333333 !important;
+}

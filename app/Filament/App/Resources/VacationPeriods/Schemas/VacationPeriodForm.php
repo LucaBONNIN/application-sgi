@@ -22,12 +22,12 @@ class VacationPeriodForm
                     ->label(__('filament/resources/vacation_period.fields.end_date'))
                     ->required()
                     ->afterOrEqual('start_date'),
-                TextInput::make('school_year')
-                    ->label(__('filament/resources/vacation_period.fields.school_year'))
-                    ->required()
-                    ->numeric()
-                    ->minValue(2020)
-                    ->maxValue(2100),
+//                TextInput::make('school_year')
+//                    ->label(__('filament/resources/vacation_period.fields.school_year'))
+//                    ->required()
+//                    ->numeric()
+//                    ->minValue(2020)
+//                    ->maxValue(2100),
             ]);
     }
 }

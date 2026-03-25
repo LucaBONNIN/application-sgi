@@ -25,10 +25,10 @@ class VacationPeriodsTable
                     ->label(__('filament/resources/vacation_period.fields.end_date'))
                     ->date()
                     ->sortable(),
-                TextColumn::make('school_year')
-                    ->label(__('filament/resources/vacation_period.fields.school_year'))
-                    ->numeric()
-                    ->sortable(),
+//                TextColumn::make('school_year')
+//                    ->label(__('filament/resources/vacation_period.fields.school_year'))
+//                    ->numeric()
+//                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

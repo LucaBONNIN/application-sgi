@@ -31,6 +31,7 @@ class AppPanelProvider extends PanelProvider
             ->default()
             ->id('app')
             ->path('')
+            ->viteTheme('resources/css/filament/app/theme.css')
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -82,6 +83,7 @@ class AppPanelProvider extends PanelProvider
             ->navigationGroups([
                 __('filament/navigation.groups.orders'),
                 __('filament/navigation.groups.admin'),
-            ]);
+            ])
+            ->darkMode(true); // ou ->defaultThemeMode(ThemeMode::Dark)
     }
 }

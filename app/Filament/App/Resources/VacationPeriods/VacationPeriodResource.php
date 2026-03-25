@@ -7,6 +7,7 @@ use App\Filament\App\Resources\VacationPeriods\Pages\EditVacationPeriod;
 use App\Filament\App\Resources\VacationPeriods\Pages\ListVacationPeriods;
 use App\Filament\App\Resources\VacationPeriods\Schemas\VacationPeriodForm;
 use App\Filament\App\Resources\VacationPeriods\Tables\VacationPeriodsTable;
+use App\Filament\App\Resources\VacationPeriods\Widgets\MyCalendarWidget;
 use App\Models\VacationPeriod;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -63,5 +64,10 @@ class VacationPeriodResource extends Resource
             'create' => CreateVacationPeriod::route('/create'),
             'edit' => EditVacationPeriod::route('/{record}/edit'),
         ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [MyCalendarWidget::class];
     }
 }
