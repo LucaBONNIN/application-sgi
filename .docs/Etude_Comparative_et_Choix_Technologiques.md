@@ -1,5 +1,9 @@
+# Étude comparative et choix technologiques
+
 **Projet :** Système de Gestion de l'Intendance (SGI)
+
 **Contexte :** Projet d'application web
+
 ## 1. Introduction et Analyse des besoins
 Dans le cadre du développement de l'application SGI, destinée à centraliser les demandes de l'établissement (fournitures, sorties, réservations), notre équipe a dû sélectionner la pile technologique (stack) la plus adaptée.
 
