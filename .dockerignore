@@ -6,3 +6,4 @@ docker-*.yml
 .spin*
 .infrastructure
 !.infrastructure/**/local-ca.pem
+public/hot
