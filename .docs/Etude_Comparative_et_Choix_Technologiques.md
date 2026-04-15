@@ -7,7 +7,7 @@
 ## 1. Introduction et Analyse des besoins
 Dans le cadre du développement de l'application SGI, destinée à centraliser les demandes de l'établissement (fournitures, sorties, réservations), notre équipe a dû sélectionner la pile technologique (stack) la plus adaptée.
 
-Notre équipe étant composée de trois étudiants débutants en frameworks, nous avons défini trois critères décisifs pour ce choix :
+Notre équipe étant composée de deux étudiants débutants en frameworks, nous avons défini trois critères décisifs pour ce choix :
 
 1. **Vitesse de développement (RAD) :** La capacité à livrer un prototype fonctionnel rapidement compte tenu des délais scolaires.
 2. **Facilité d'apprentissage :** La courbe d'apprentissage doit être compatible avec notre niveau actuel.
