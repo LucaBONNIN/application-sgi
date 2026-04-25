@@ -27,8 +27,8 @@
     }"
     x-init="init()"
 >
-    <strong>{{ __('Demo') }}</strong>
+    <strong>{{ __('filament/demo.banner.title') }}</strong>
     &mdash;
-    {{ __('This is a demo instance. All data resets every 30 minutes.') }}
-    {{ __('Next reset in') }} <strong x-text="formatted">--:--</strong>.
+    {{ __('filament/demo.banner.message') }}
+    {{ __('filament/demo.banner.next_reset') }} <strong x-text="formatted">--:--</strong>.
 </div>
