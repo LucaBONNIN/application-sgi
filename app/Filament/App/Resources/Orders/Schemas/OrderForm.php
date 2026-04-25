@@ -11,10 +11,12 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Illuminate\Support\HtmlString;
 
 class OrderForm
 {
@@ -68,7 +70,17 @@ class OrderForm
                             ->directory('quotations')
                             ->acceptedFileTypes(['application/pdf'])
                             ->maxSize(10240)
+                            ->downloadable()
                             ->live()
+                            ->columnSpanFull(),
+
+                        TextEntry::make('quotation_preview')
+                            ->label(__('filament/resources/order.fields.quotation_preview'))
+                            ->state(fn ($record): HtmlString => new HtmlString(
+                                '<iframe src="'.route('orders.quotation.preview', $record).'" class="w-full rounded border-0" style="height:600px;"></iframe>'
+                            ))
+                            ->html()
+                            ->visible(fn ($record): bool => $record !== null && filled($record->quotation_path))
                             ->columnSpanFull(),
 
                         Textarea::make('description')

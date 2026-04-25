@@ -15,6 +15,7 @@ return [
         'service' => 'Service',
         'supplier' => 'Fournisseur',
         'quotation' => 'Devis',
+        'quotation_preview' => 'Aperçu du devis',
         'description' => 'Précisions',
         'budget' => 'Clôture budgétaire',
         'status' => 'Statut',

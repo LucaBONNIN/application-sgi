@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\Orders\Schemas;
 
+use App\Models\Order;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
@@ -36,7 +37,10 @@ class OrderInfolist
 
                 TextEntry::make('quotation_path')
                     ->label(__('filament/resources/order.fields.quotation'))
-                    ->visible(fn ($record): bool => filled($record->quotation_path)),
+                    ->formatStateUsing(fn (string $state): string => basename($state))
+                    ->url(fn (Order $record): string => route('orders.quotation.download', $record))
+                    ->openUrlInNewTab()
+                    ->visible(fn (Order $record): bool => filled($record->quotation_path)),
 
                 TextEntry::make('estimated_delivery_date')
                     ->label(__('filament/resources/order.fields.estimated_delivery_date'))

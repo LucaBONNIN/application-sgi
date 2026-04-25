@@ -15,6 +15,7 @@ return [
         'service' => 'Service',
         'supplier' => 'Supplier',
         'quotation' => 'Quotation',
+        'quotation_preview' => 'Quotation Preview',
         'description' => 'Additional Details',
         'budget' => 'Budget Allocation',
         'status' => 'Status',
