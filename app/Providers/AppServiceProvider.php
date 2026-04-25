@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use BezhanSalleh\FilamentShield\Facades\FilamentShield;
+use Filament\Support\Facades\FilamentView;
+use Filament\View\PanelsRenderHook;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,5 +23,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         FilamentShield::prohibitDestructiveCommands($this->app->isProduction());
+
+        if ($this->app->isProduction()) {
+            FilamentView::registerRenderHook(
+                PanelsRenderHook::BODY_START,
+                fn () => view('filament.demo-banner'),
+            );
+        }
     }
 }
