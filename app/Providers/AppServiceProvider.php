@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use BezhanSalleh\FilamentShield\Facades\FilamentShield;
 use Filament\Support\Facades\FilamentView;
 use Filament\View\PanelsRenderHook;
@@ -28,6 +29,15 @@ class AppServiceProvider extends ServiceProvider
             FilamentView::registerRenderHook(
                 PanelsRenderHook::BODY_START,
                 fn () => view('filament.demo-banner'),
+            );
+
+            FilamentView::registerRenderHook(
+                PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
+                fn () => view('filament.demo-credentials', [
+                    'firstUser' => User::where('email', '!=', 'admin.intendance.1@127011.xyz')
+                        ->orderBy('id')
+                        ->first(),
+                ]),
             );
         }
     }

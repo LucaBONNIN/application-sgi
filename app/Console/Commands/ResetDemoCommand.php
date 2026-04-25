@@ -14,14 +14,20 @@ class ResetDemoCommand extends Command
 
     public function handle(): int
     {
-        Storage::disk('local')->deleteDirectory('quotations');
+        Artisan::call('down');
 
-        Artisan::call('migrate:fresh', [
-            '--seed' => true,
-            '--force' => true,
-        ]);
+        try {
+            Storage::disk('local')->deleteDirectory('quotations');
 
-        $this->line(Artisan::output());
+            Artisan::call('migrate:fresh', [
+                '--seed' => true,
+                '--force' => true,
+            ]);
+
+            $this->line(Artisan::output());
+        } finally {
+            Artisan::call('up');
+        }
 
         return self::SUCCESS;
     }
