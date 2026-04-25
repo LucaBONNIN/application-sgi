@@ -1,18 +1,22 @@
 {
     "agents": [
         "claude_code",
-        "gemini"
+        "gemini",
+        "copilot",
+        "codex"
     ],
     "guidelines": true,
-    "herd_mcp": false,
     "mcp": true,
     "nightwatch_mcp": false,
     "packages": [
-        "filament/filament"
+        "filament/filament",
+        "serversideup/spin"
     ],
     "sail": false,
     "skills": [
+        "laravel-best-practices",
         "configuring-horizon",
-        "tailwindcss-development"
+        "tailwindcss-development",
+        "spin-laravel-development"
     ]
 }

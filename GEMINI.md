@@ -19,7 +19,6 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - laravel/mcp (MCP) - v0
 - laravel/pail (PAIL) - v1
 - laravel/pint (PINT) - v1
-- laravel/sail (SAIL) - v1
 - phpunit/phpunit (PHPUNIT) - v11
 - tailwindcss (TAILWINDCSS) - v4
 
@@ -27,8 +26,10 @@ This application is a Laravel application and its main Laravel ecosystems packag
 
 This project has domain-specific skills available. You MUST activate the relevant skill whenever you work in that domain—don't wait until you're stuck.
 
+- `laravel-best-practices` — Apply this skill whenever writing, reviewing, or refactoring Laravel PHP code. This includes creating or modifying controllers, models, migrations, form requests, policies, jobs, scheduled commands, service classes, and Eloquent queries. Triggers for N+1 and query performance issues, caching strategies, authorization and security patterns, validation, error handling, queue and job configuration, route definitions, and architectural decisions. Also use for Laravel code reviews and refactoring existing Laravel code to follow best practices. Covers any task involving Laravel backend PHP code patterns.
 - `configuring-horizon` — Use this skill whenever the user mentions Horizon by name in a Laravel context. Covers the full Horizon lifecycle: installing Horizon (horizon:install, Sail setup), configuring config/horizon.php (supervisor blocks, queue assignments, balancing strategies, minProcesses/maxProcesses), fixing the dashboard (authorization via Gate::define viewHorizon, blank metrics, horizon:snapshot scheduling), and troubleshooting production issues (worker crashes, timeout chain ordering, LongWaitDetected notifications, waits config). Also covers job tagging and silencing. Do not use for generic Laravel queues without Horizon, SQS or database drivers, standalone Redis setup, Linux supervisord, Telescope, or job batching.
 - `tailwindcss-development` — Always invoke when the user's message includes 'tailwind' in any form. Also invoke for: building responsive grid layouts (multi-column card grids, product grids), flex/grid page structures (dashboards with sidebars, fixed topbars, mobile-toggle navs), styling UI components (cards, tables, navbars, pricing sections, forms, inputs, badges), adding dark mode variants, fixing spacing or typography, and Tailwind v3/v4 work. The core use case: writing or fixing Tailwind utility classes in HTML templates (Blade, JSX, Vue). Skip for backend PHP logic, database queries, API routes, JavaScript with no HTML/CSS component, CSS file audits, build tool configuration, and vanilla CSS.
+- `spin-laravel-development` — Develops, tests, and deploys Laravel applications using Spin and serversideup/php Docker images. Covers Docker Compose configuration, development environment setup, container commands, running Laravel tests (PHPUnit and Pest), SPIN_ENV selection and CI parity, parallel Compose environments, Laravel service configuration (databases, queues, Horizon, Reverb), server provisioning, and deployment workflows. Use when working with Spin, Docker Compose files, serversideup/php images, spin commands, running artisan test, configuring Laravel services in Docker, or deploying Laravel apps to production servers.
 
 ## Conventions
 
@@ -61,82 +62,57 @@ This project has domain-specific skills available. You MUST activate the relevan
 
 # Laravel Boost
 
-- Laravel Boost is an MCP server that comes with powerful tools designed specifically for this application. Use them.
+## Tools
 
-## Artisan Commands
+- Laravel Boost is an MCP server with tools designed specifically for this application. Prefer Boost tools over manual alternatives like shell commands or file reads.
+- Use `database-query` to run read-only queries against the database instead of writing raw SQL in tinker.
+- Use `database-schema` to inspect table structure before writing migrations or models.
+- Use `get-absolute-url` to resolve the correct scheme, domain, and port for project URLs. Always use this before sharing a URL with the user.
+- Use `browser-logs` to read browser logs, errors, and exceptions. Only recent logs are useful, ignore old entries.
 
-- Run Artisan commands directly via the command line (e.g., `./.infrastructure/scripts/mcp-wait.sh ./vendor/bin/spin run -T php php artisan route:list`, `./.infrastructure/scripts/mcp-wait.sh ./vendor/bin/spin run -T php php artisan tinker --execute "..."`).
-- Use `./.infrastructure/scripts/mcp-wait.sh ./vendor/bin/spin run -T php php artisan list` to discover available commands and `./.infrastructure/scripts/mcp-wait.sh ./vendor/bin/spin run -T php php artisan [command] --help` to check parameters.
+## Searching Documentation (IMPORTANT)
 
-## URLs
+- Always use `search-docs` before making code changes. Do not skip this step. It returns version-specific docs based on installed packages automatically.
+- Pass a `packages` array to scope results when you know which packages are relevant.
+- Use multiple broad, topic-based queries: `['rate limiting', 'routing rate limiting', 'routing']`. Expect the most relevant results first.
+- Do not add package names to queries because package info is already shared. Use `test resource table`, not `filament 4 test resource table`.
 
-- Whenever you share a project URL with the user, you should use the `get-absolute-url` tool to ensure you're using the correct scheme, domain/IP, and port.
+### Search Syntax
 
-## Debugging
+1. Use words for auto-stemmed AND logic: `rate limit` matches both "rate" AND "limit".
+2. Use `"quoted phrases"` for exact position matching: `"infinite scroll"` requires adjacent words in order.
+3. Combine words and phrases for mixed queries: `middleware "rate limit"`.
+4. Use multiple queries for OR logic: `queries=["authentication", "middleware"]`.
 
-- Use the `database-query` tool when you only need to read from the database.
-- Use the `database-schema` tool to inspect table structure before writing migrations or models.
-- To execute PHP code for debugging, run `./.infrastructure/scripts/mcp-wait.sh ./vendor/bin/spin run -T php php artisan tinker --execute "your code here"` directly.
-- To read configuration values, read the config files directly or run `./.infrastructure/scripts/mcp-wait.sh ./vendor/bin/spin run -T php php artisan config:show [key]`.
-- To inspect routes, run `./.infrastructure/scripts/mcp-wait.sh ./vendor/bin/spin run -T php php artisan route:list` directly.
+## Artisan
+
+- Run Artisan commands directly via the command line (e.g., `./.infrastructure/scripts/mcp-wait.sh ./vendor/bin/spin run -T php php artisan route:list`). Use `./.infrastructure/scripts/mcp-wait.sh ./vendor/bin/spin run -T php php artisan list` to discover available commands and `./.infrastructure/scripts/mcp-wait.sh ./vendor/bin/spin run -T php php artisan [command] --help` to check parameters.
+- Inspect routes with `./.infrastructure/scripts/mcp-wait.sh ./vendor/bin/spin run -T php php artisan route:list`. Filter with: `--method=GET`, `--name=users`, `--path=api`, `--except-vendor`, `--only-vendor`.
+- Read configuration values using dot notation: `./.infrastructure/scripts/mcp-wait.sh ./vendor/bin/spin run -T php php artisan config:show app.name`, `./.infrastructure/scripts/mcp-wait.sh ./vendor/bin/spin run -T php php artisan config:show database.default`. Or read config files directly from the `config/` directory.
 - To check environment variables, read the `.env` file directly.
 
-## Reading Browser Logs With the `browser-logs` Tool
+## Tinker
 
-- You can read browser logs, errors, and exceptions using the `browser-logs` tool from Boost.
-- Only recent browser logs will be useful - ignore old logs.
-
-## Searching Documentation (Critically Important)
-
-- Boost comes with a powerful `search-docs` tool you should use before trying other approaches when working with Laravel or Laravel ecosystem packages. This tool automatically passes a list of installed packages and their versions to the remote Boost API, so it returns only version-specific documentation for the user's circumstance. You should pass an array of packages to filter on if you know you need docs for particular packages.
-- Search the documentation before making code changes to ensure we are taking the correct approach.
-- Use multiple, broad, simple, topic-based queries at once. For example: `['rate limiting', 'routing rate limiting', 'routing']`. The most relevant results will be returned first.
-- Do not add package names to queries; package information is already shared. For example, use `test resource table`, not `filament 4 test resource table`.
-
-### Available Search Syntax
-
-1. Simple Word Searches with auto-stemming - query=authentication - finds 'authenticate' and 'auth'.
-2. Multiple Words (AND Logic) - query=rate limit - finds knowledge containing both "rate" AND "limit".
-3. Quoted Phrases (Exact Position) - query="infinite scroll" - words must be adjacent and in that order.
-4. Mixed Queries - query=middleware "rate limit" - "middleware" AND exact phrase "rate limit".
-5. Multiple Queries - queries=["authentication", "middleware"] - ANY of these terms.
+- Execute PHP in app context for debugging and testing code. Do not create models without user approval, prefer tests with factories instead. Prefer existing Artisan commands over custom tinker code.
+- Always use single quotes to prevent shell expansion: `./.infrastructure/scripts/mcp-wait.sh ./vendor/bin/spin run -T php php artisan tinker --execute 'Your::code();'`
+  - Double quotes for PHP strings inside: `./.infrastructure/scripts/mcp-wait.sh ./vendor/bin/spin run -T php php artisan tinker --execute 'User::where("active", true)->count();'`
 
 === php rules ===
 
 # PHP
 
 - Always use curly braces for control structures, even for single-line bodies.
+- Use PHP 8 constructor property promotion: `public function __construct(public GitHub $github) { }`. Do not leave empty zero-parameter `__construct()` methods unless the constructor is private.
+- Use explicit return type declarations and type hints for all method parameters: `function isAccessible(User $user, ?string $path = null): bool`
+- Use TitleCase for Enum keys: `FavoritePerson`, `BestLake`, `Monthly`.
+- Prefer PHPDoc blocks over inline comments. Only add inline comments for exceptionally complex logic.
+- Use array shape type definitions in PHPDoc blocks.
 
-## Constructors
+=== deployments rules ===
 
-- Use PHP 8 constructor property promotion in `__construct()`.
-    - `public function __construct(public GitHub $github) { }`
-- Do not allow empty `__construct()` methods with zero parameters unless the constructor is private.
+# Deployment
 
-## Type Declarations
-
-- Always use explicit return type declarations for methods and functions.
-- Use appropriate PHP type hints for method parameters.
-
-<!-- Explicit Return Types and Method Params -->
-```php
-protected function isAccessible(User $user, ?string $path = null): bool
-{
-    ...
-}
-```
-
-## Enums
-
-- Typically, keys in an Enum should be TitleCase. For example: `FavoritePerson`, `BestLake`, `Monthly`.
-
-## Comments
-
-- Prefer PHPDoc blocks over inline comments. Never use comments within the code itself unless the logic is exceptionally complex.
-
-## PHPDoc Blocks
-
-- Add useful array shape type definitions when appropriate.
+- Laravel can be deployed using [Laravel Cloud](https://cloud.laravel.com/), which is the fastest way to deploy and scale production Laravel applications.
 
 === tests rules ===
 
@@ -153,42 +129,17 @@ protected function isAccessible(User $user, ?string $path = null): bool
 - If you're creating a generic PHP class, use `./.infrastructure/scripts/mcp-wait.sh ./vendor/bin/spin run -T php php artisan make:class`.
 - Pass `--no-interaction` to all Artisan commands to ensure they work without user input. You should also pass the correct `--options` to ensure correct behavior.
 
-## Database
-
-- Always use proper Eloquent relationship methods with return type hints. Prefer relationship methods over raw queries or manual joins.
-- Use Eloquent models and relationships before suggesting raw database queries.
-- Avoid `DB::`; prefer `Model::query()`. Generate code that leverages Laravel's ORM capabilities rather than bypassing them.
-- Generate code that prevents N+1 query problems by using eager loading.
-- Use Laravel's query builder for very complex database operations.
-
 ### Model Creation
 
 - When creating new models, create useful factories and seeders for them too. Ask the user if they need any other things, using `./.infrastructure/scripts/mcp-wait.sh ./vendor/bin/spin run -T php php artisan make:model --help` to check the available options.
 
-### APIs & Eloquent Resources
+## APIs & Eloquent Resources
 
 - For APIs, default to using Eloquent API Resources and API versioning unless existing API routes do not, then you should follow existing application convention.
-
-## Controllers & Validation
-
-- Always create Form Request classes for validation rather than inline validation in controllers. Include both validation rules and custom error messages.
-- Check sibling Form Requests to see if the application uses array or string based validation rules.
-
-## Authentication & Authorization
-
-- Use Laravel's built-in authentication and authorization features (gates, policies, Sanctum, etc.).
 
 ## URL Generation
 
 - When generating links to other pages, prefer named routes and the `route()` function.
-
-## Queues
-
-- Use queued jobs for time-consuming operations with the `ShouldQueue` interface.
-
-## Configuration
-
-- Use environment variables only in configuration files - never use the `env()` function directly outside of config files. Always use `config('app.name')`, not `env('APP_NAME')`.
 
 ## Testing
 
@@ -254,14 +205,13 @@ protected function isAccessible(User $user, ?string $path = null): bool
 
 ## Filament
 
-- Filament is used by this application. Follow the existing conventions for how and where it is implemented.
-- Filament is a Server-Driven UI (SDUI) framework for Laravel that lets you define user interfaces in PHP using structured configuration objects. Built on Livewire, Alpine.js, and Tailwind CSS.
+- Filament is a Laravel UI framework built on Livewire, Alpine.js, and Tailwind CSS. UIs are defined in PHP via fluent, chainable components. Follow existing conventions in this app.
 - Use the `search-docs` tool for official documentation on Artisan commands, code examples, testing, relationships, and idiomatic practices. If `search-docs` is unavailable, refer to https://filamentphp.com/docs.
 
 ### Artisan
 
 - Always use Filament-specific Artisan commands to create files. Find available commands with the `list-artisan-commands` tool, or run `php artisan --help`.
-- Always inspect required options before running a command, and always pass `--no-interaction`.
+- Inspect required options before running, and always pass `--no-interaction`.
 
 ### Patterns
 
@@ -285,6 +235,62 @@ TextInput::make('company_name')
 
 </code-snippet>
 
+Use `Set $set` inside `->afterStateUpdated()` on a `->live()` field to mutate another field reactively. Prefer `->live(onBlur: true)` on text inputs to avoid per-keystroke updates:
+
+<code-snippet name="Reactive field update" lang="php">
+use Filament\Schemas\Components\Utilities\Set;
+use Illuminate\Support\Str;
+
+TextInput::make('title')
+    ->required()
+    ->live(onBlur: true)
+    ->afterStateUpdated(fn (Set $set, ?string $state) => $set(
+        'slug',
+        Str::slug($state ?? ''),
+    )),
+
+TextInput::make('slug')
+    ->required(),
+
+</code-snippet>
+
+Compose layout by nesting `Section` and `Grid`. Children need explicit `->columnSpan()` or `->columnSpanFull()`:
+
+<code-snippet name="Section and Grid layout" lang="php">
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
+
+Section::make('Details')
+    ->schema([
+        Grid::make(2)->schema([
+            TextInput::make('first_name')
+                ->columnSpan(1),
+            TextInput::make('last_name')
+                ->columnSpan(1),
+            TextInput::make('bio')
+                ->columnSpanFull(),
+        ]),
+    ]),
+
+</code-snippet>
+
+Use `Repeater` for inline `HasMany` management. `->relationship()` with no args binds to the relationship matching the field name:
+
+<code-snippet name="Repeater for HasMany" lang="php">
+use Filament\Forms\Components\Repeater;
+
+Repeater::make('qualifications')
+    ->relationship()
+    ->schema([
+        TextInput::make('institution')
+            ->required(),
+        TextInput::make('qualification')
+            ->required(),
+    ])
+    ->columns(2),
+
+</code-snippet>
+
 Use `state()` with a `Closure` to compute derived column values:
 
 <code-snippet name="Computed table column value" lang="php">
@@ -295,11 +301,28 @@ TextColumn::make('full_name')
 
 </code-snippet>
 
-Actions encapsulate a button with an optional modal form and logic:
+Use `SelectFilter` for enum or relationship filters, and `Filter` with a `->query()` closure for custom logic:
+
+<code-snippet name="Table filters" lang="php">
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
+
+SelectFilter::make('status')
+    ->options(UserStatus::class),
+
+SelectFilter::make('author')
+    ->relationship('author', 'name'),
+
+Filter::make('verified')
+    ->query(fn (Builder $query) => $query->whereNotNull('email_verified_at')),
+
+</code-snippet>
+
+Actions are buttons that encapsulate optional modal forms and behavior:
 
 <code-snippet name="Action with modal form" lang="php">
 use Filament\Actions\Action;
-use Filament\Forms\Components\TextInput;
 
 Action::make('updateEmail')
     ->schema([
@@ -307,13 +330,16 @@ Action::make('updateEmail')
             ->email()
             ->required(),
     ])
-    ->action(fn (array $data, User $record) => $record->update($data))
+    ->action(fn (array $data, User $record) => $record->update($data)),
 
 </code-snippet>
 
 ### Testing
 
-Always authenticate before testing panel functionality. Filament uses Livewire, so use `Livewire::test()` or `livewire()` (available when `pestphp/pest-plugin-livewire` is in `composer.json`):
+Testing setup (requires `pestphp/pest-plugin-livewire` in `composer.json`):
+
+- Always call `$this->actingAs(User::factory()->create())` before testing panel functionality.
+- For edit pages, pass `['record' => $user->id]`, use `->call('save')` (not `->call('create')`), and do not assert `->assertRedirect()` (edit pages do not redirect after save).
 
 <code-snippet name="Table test" lang="php">
 use function Pest\Livewire\livewire;
@@ -328,7 +354,6 @@ livewire(ListUsers::class)
 
 <code-snippet name="Create resource test" lang="php">
 use function Pest\Laravel\assertDatabaseHas;
-use function Pest\Livewire\livewire;
 
 livewire(CreateUser::class)
     ->fillForm([
@@ -337,6 +362,7 @@ livewire(CreateUser::class)
     ])
     ->call('create')
     ->assertNotified()
+    ->assertHasNoFormErrors()
     ->assertRedirect();
 
 assertDatabaseHas(User::class, [
@@ -346,9 +372,21 @@ assertDatabaseHas(User::class, [
 
 </code-snippet>
 
-<code-snippet name="Testing validation" lang="php">
-use function Pest\Livewire\livewire;
+<code-snippet name="Edit resource test" lang="php">
+livewire(EditUser::class, ['record' => $user->id])
+    ->fillForm(['name' => 'Updated'])
+    ->call('save')
+    ->assertNotified()
+    ->assertHasNoFormErrors();
 
+assertDatabaseHas(User::class, [
+    'id' => $user->id,
+    'name' => 'Updated',
+]);
+
+</code-snippet>
+
+<code-snippet name="Testing validation" lang="php">
 livewire(CreateUser::class)
     ->fillForm([
         'name' => null,
@@ -363,20 +401,10 @@ livewire(CreateUser::class)
 
 </code-snippet>
 
-<code-snippet name="Calling actions in pages" lang="php">
-use Filament\Actions\DeleteAction;
-use function Pest\Livewire\livewire;
+Use `->callAction(DeleteAction::class)` for page actions, or `->callAction(TestAction::make('name')->table($record))` for table actions:
 
-livewire(EditUser::class, ['record' => $user->id])
-    ->callAction(DeleteAction::class)
-    ->assertNotified()
-    ->assertRedirect();
-
-</code-snippet>
-
-<code-snippet name="Calling actions in tables" lang="php">
+<code-snippet name="Calling actions" lang="php">
 use Filament\Actions\Testing\TestAction;
-use function Pest\Livewire\livewire;
 
 livewire(ListUsers::class)
     ->callAction(TestAction::make('promote')->table($user), [
@@ -388,16 +416,142 @@ livewire(ListUsers::class)
 
 ### Correct Namespaces
 
-- Form fields (`TextInput`, `Select`, etc.): `Filament\Forms\Components\`
+- Form fields (`TextInput`, `Select`, `Repeater`, etc.): `Filament\Forms\Components\`
 - Infolist entries (`TextEntry`, `IconEntry`, etc.): `Filament\Infolists\Components\`
 - Layout components (`Grid`, `Section`, `Fieldset`, `Tabs`, `Wizard`, etc.): `Filament\Schemas\Components\`
 - Schema utilities (`Get`, `Set`, etc.): `Filament\Schemas\Components\Utilities\`
+- Table columns (`TextColumn`, `IconColumn`, etc.): `Filament\Tables\Columns\`
+- Table filters (`SelectFilter`, `Filter`, etc.): `Filament\Tables\Filters\`
 - Actions (`DeleteAction`, `CreateAction`, etc.): `Filament\Actions\`. Never use `Filament\Tables\Actions\`, `Filament\Forms\Actions\`, or any other sub-namespace for actions.
 - Icons: `Filament\Support\Icons\Heroicon` enum (e.g., `Heroicon::PencilSquare`)
 
 ### Common Mistakes
 
 - **Never assume public file visibility.** File visibility is `private` by default. Always use `->visibility('public')` when public access is needed.
-- **Never assume full-width layout.** `Grid`, `Section`, and `Fieldset` do not span all columns by default. Explicitly set column spans when needed.
+- **Never assume full-width layout.** `Grid`, `Section`, `Fieldset`, and `Repeater` do not span all columns by default.
+- **Use `Select::make('author_id')->relationship('author', 'name')` for BelongsTo fields.** `BelongsToSelect` does not exist in v4.
+- **`Repeater` uses `->schema()`, not `->fields()`.**
+- **Never add `->dehydrated(false)` to fields that need to be saved.** It strips the value from form state before `->action()` or the save handler runs. Only use it for helper/UI-only fields.
+- **Use correct property types when overriding `Page`, `Resource`, and `Widget` properties.** These properties have union types or changed modifiers that must be preserved:
+  - `$navigationIcon`: `protected static string | BackedEnum | null` (not `?string`)
+  - `$navigationGroup`: `protected static string | UnitEnum | null` (not `?string`)
+  - `$view`: `protected string` (not `protected static string`) on `Page` and `Widget` classes
+
+=== serversideup/spin rules ===
+
+# Spin — Docker Workflow for Laravel
+
+Spin is a lightweight CLI that wraps Docker Compose (development) and Docker Swarm (production) so you can replicate any environment on any machine.
+
+## Key facts
+
+- Spin follows Docker Compose syntax exactly — `spin up` runs `docker compose up`, `spin run` runs `docker compose run`, etc.
+- Projects use a **Docker Compose overrides** pattern: a base `docker-compose.yml` merged with `docker-compose.$SPIN_ENV.yml`. `SPIN_ENV` defaults to `dev` (→ `docker-compose.dev.yml`). Common values: `dev`, `ci`, `prod`.
+- Laravel projects use `serversideup/php` Docker images (fpm-nginx, fpm-apache, frankenphp, cli).
+- The `.infrastructure/` folder stores configuration files (`conf/`) and gitignored volume data (`volume_data/`).
+- In Docker, services connect via container name as hostname (`DB_HOST=mysql`, `REDIS_HOST=redis`), not `localhost`.
+
+## Essential commands
+
+| Command | Purpose |
+|---------|---------|
+| `spin up` | Start development environment (foreground) |
+| `spin up --build` | Start and rebuild containers (recommended default if custom Dockerfile is used) |
+| `spin exec <service> <cmd>` | Run a command in a running container (reuses live container, near-instant) |
+| `spin run <service> <cmd>` | Run a one-off command in a new container (use when the stack is not running) |
+| `spin deploy <env>` | Deploy to a provisioned server |
+| `spin provision` | Provision and configure servers |
+
+### `spin exec` vs `spin run`
+
+- **`spin exec`** — use when the stack is running. Reuses the live container. This is the right default for `artisan`, `composer`, `npm`, tests, and ad-hoc commands during development.
+- **`spin run`** — use when the stack is not running, or when a fresh container with different env vars or isolated state is needed. Creates (and removes) a new container each invocation.
+
+### The `-T` flag (disable pseudo-TTY)
+
+Compose auto-detects TTY by default, so interactive use from a terminal usually works without `-T`. **In AI agent, CI, and other subprocess contexts**, that auto-detection can misfire — Compose sees a TTY on stdin while downstream output is being captured, which can cause hangs, ANSI-garbled output, or prompts with nowhere to respond.
+
+Pass `-T` as a defensive default when running commands from an AI agent, CI pipeline, or any wrapper script:
+
+```bash
+./vendor/bin/spin exec -T php php artisan test
+./vendor/bin/spin run  -T php composer install
+```
+
+Omit `-T` when interactivity is actually needed (`artisan tinker` without `--execute`, interactive `make:*` prompts, `spin exec php bash`).
+
+### Running Laravel tests
+
+Prefer the **already-running dev stack** — it's faster than spinning up a parallel CI stack:
+
+```bash
+./vendor/bin/spin exec -T php php artisan test
+./vendor/bin/spin exec -T php php artisan test --filter=ExampleTest
+```
+
+`php artisan test` works for both PHPUnit and Pest. If the project exposes a `composer test` script, prefer that via `spin exec -T php composer test`.
+
+**Before assuming the dev stack is enough, inspect the test config** (`phpunit.xml`, `phpunit.xml.dist`, or `phpunit.dist.xml`):
+
+- If `<php>` overrides `DB_CONNECTION` to `sqlite` with `DB_DATABASE=:memory:` (and `CACHE_STORE`/`QUEUE_CONNECTION`/`SESSION_DRIVER` set to `array`/`sync`), tests are self-contained — the dev stack is plenty.
+- If the test config uses the real database/cache services, the dev stack usually still works. Reach for `SPIN_ENV=ci` only when CI parity is needed (reproducing a CI-only failure, matching exact service versions, dry-running the pipeline). See the **spin-laravel-development** skill's `TESTING.md` for the full CI-parity workflow.
+
+## When to activate the full skill
+
+Activate the **spin-laravel-development** skill for tasks involving:
+- Docker Compose configuration or Dockerfile changes
+- `serversideup/php` image settings
+- Adding Laravel services (databases, queues, Horizon, Reverb)
+- Running tests with CI parity (`SPIN_ENV=ci`)
+- Running multiple Compose environments in parallel
+- Server provisioning, deployment, or troubleshooting containerized environments
+
+## Laravel Boost MCP setup
+
+Since Spin runs PHP inside Docker (not on the host), Laravel Boost needs special configuration to start its MCP server. Spin ships `spin-mcp-wait.sh` which retries until Docker is ready and filters stdout for clean JSON-RPC communication.
+
+Add these to your `.env` file:
+
+```
+BOOST_PHP_EXECUTABLE_PATH="./vendor/bin/spin-mcp-wait.sh ./vendor/bin/spin run -T php php"
+BOOST_COMPOSER_EXECUTABLE_PATH="./vendor/bin/spin run php composer"
+BOOST_NPM_EXECUTABLE_PATH="./vendor/bin/spin run node npm"
+```
+
+Then run:
+
+```
+spin run php php artisan boost:install
+```
+
+**IMPORTANT:** `spin-mcp-wait.sh` is exclusively for MCP server startup. NEVER use it to run commands. Always invoke `spin exec` (running stack) or `spin run` (stopped stack) directly.
+
+If this error appears, drop `spin-mcp-wait.sh` and invoke `spin` directly:
+
+```
+Error: spin-mcp-wait.sh is only for starting the MCP server. Use 'spin' directly instead.
+```
+
+Correct:
+
+```bash
+./vendor/bin/spin exec -T php php artisan test
+./vendor/bin/spin run -T php php artisan migrate
+```
+
+## Templates
+
+- **Basic** (`spin new laravel`): Free open source template — <https://github.com/serversideup/spin-template-laravel-basic>
+- **Pro** (`spin new laravel-pro`): Premium template with pre-configured services (Horizon, Reverb, databases, Vite, Mailpit, etc.) — <https://getspin.pro>
+
+## Resources
+
+- Spin docs: <https://serversideup.net/open-source/spin/docs>
+- Spin docs (LLM-friendly): <https://serversideup.net/open-source/spin/llms.txt>
+- serversideup/php docs: <https://serversideup.net/open-source/docker-php/docs>
+- serversideup/php docs (LLM-friendly): <https://serversideup.net/open-source/docker-php/llms.txt>
+- serversideup/php full docs (LLM-friendly): <https://serversideup.net/open-source/docker-php/llms-full.txt>
+- serversideup/php environment variable reference: <https://serversideup.net/open-source/docker-php/docs/reference/environment-variable-specification>
+- Spin Pro docs: <https://getspin.pro/docs>
 
 </laravel-boost-guidelines>
