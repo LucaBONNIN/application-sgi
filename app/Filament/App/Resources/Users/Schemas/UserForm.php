@@ -4,9 +4,7 @@ namespace App\Filament\App\Resources\Users\Schemas;
 
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 
 class UserForm
@@ -22,12 +20,6 @@ class UserForm
                     ->email()
                     ->required(),
                 DateTimePicker::make('email_verified_at')->disabled(),
-                Textarea::make('app_authentication_secret')
-                    ->columnSpanFull(),
-                Textarea::make('app_authentication_recovery_codes')
-                    ->columnSpanFull(),
-                Toggle::make('has_email_authentication')
-                    ->required(),
                 Select::make('roles')
                     ->relationship('roles', 'name')
                     ->multiple()

@@ -31,6 +31,16 @@ class UserResource extends Resource
         return __('filament/navigation.groups.admin');
     }
 
+    public static function getModelLabel(): string
+    {
+        return __('filament/resources/user.label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament/resources/user.plural_label');
+    }
+
     public static function getNavigationLabel(): string
     {
         return __('filament/resources/user.navigation_label');
