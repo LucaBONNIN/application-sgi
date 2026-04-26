@@ -47,23 +47,30 @@ class LinesRelationManager extends RelationManager
                     ->default(1)
                     ->live(onBlur: true)
                     ->afterStateUpdated(function (Get $get, Set $set): void {
-                        $set('total_price', (int) $get('quantity') * (int) $get('unit_price'));
+                        $set('total_price', round((float) $get('quantity') * (float) $get('unit_price'), 2));
                     }),
 
                 TextInput::make('unit_price')
                     ->label(__('filament/resources/order.fields.lines.unit_price'))
                     ->numeric()
                     ->minValue(0)
+                    ->step(0.01)
+                    ->suffix('€')
+                    ->formatStateUsing(fn ($state): ?string => $state !== null ? number_format($state / 100, 2, '.', '') : null)
+                    ->dehydrateStateUsing(fn ($state): ?int => $state !== null ? (int) round((float) $state * 100) : null)
                     ->live(onBlur: true)
                     ->afterStateUpdated(function (Get $get, Set $set): void {
-                        $set('total_price', (int) $get('quantity') * (int) $get('unit_price'));
+                        $set('total_price', round((float) $get('quantity') * (float) $get('unit_price'), 2));
                     }),
 
                 TextInput::make('total_price')
                     ->label(__('filament/resources/order.fields.lines.total_price'))
                     ->numeric()
+                    ->suffix('€')
                     ->disabled()
                     ->dehydrated()
+                    ->formatStateUsing(fn ($state): ?string => $state !== null ? number_format($state / 100, 2, '.', '') : null)
+                    ->dehydrateStateUsing(fn ($state): ?int => $state !== null ? (int) round((float) $state * 100) : null)
                     ->default(0),
             ]);
     }

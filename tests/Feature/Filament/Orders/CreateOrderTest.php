@@ -216,4 +216,34 @@ class CreateOrderTest extends TestCase
             ->call('create')
             ->assertHasFormErrors(['lines.0.designation' => 'required']);
     }
+
+    #[Test]
+    public function prices_entered_in_euros_are_stored_as_centimes(): void
+    {
+        Notification::fake();
+
+        $this->actingAs($this->demandeur);
+
+        Livewire::test(CreateOrder::class)
+            ->fillForm([
+                'service_id' => $this->service->id,
+                'supplier_id' => $this->supplier->id,
+                'lines' => [
+                    [
+                        'designation' => 'Stylos bleus',
+                        'quantity' => 3,
+                        'unit_price' => 12.50,
+                        'total_price' => 37.50,
+                    ],
+                ],
+            ])
+            ->call('create')
+            ->assertHasNoFormErrors();
+
+        $order = Order::query()->latest()->first();
+        $line = $order->lines->first();
+
+        $this->assertSame(1250, $line->unit_price);
+        $this->assertSame(3750, $line->total_price);
+    }
 }
