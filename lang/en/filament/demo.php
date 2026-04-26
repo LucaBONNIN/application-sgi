@@ -5,6 +5,7 @@ return [
         'title' => 'Demo',
         'message' => 'This is a demo instance. All data resets every 30 minutes.',
         'next_reset' => 'Next reset in',
+        'resetting' => 'Resetting, please wait…',
     ],
     'credentials' => [
         'title' => 'Demo credentials',

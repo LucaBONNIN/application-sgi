@@ -17,7 +17,9 @@ class DemoBannerTest extends TestCase
         $this->assertStringContainsString(__('filament/demo.banner.title'), $html);
         $this->assertStringContainsString(__('filament/demo.banner.message'), $html);
         $this->assertStringContainsString(__('filament/demo.banner.next_reset'), $html);
+        $this->assertStringContainsString(__('filament/demo.banner.resetting'), $html);
         $this->assertStringContainsString('calculateSeconds', $html);
+        $this->assertStringContainsString('waitForReset', $html);
         $this->assertStringContainsString('x-data', $html);
     }
 
