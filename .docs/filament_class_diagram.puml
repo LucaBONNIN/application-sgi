@@ -1,14 +1,57 @@
 @startuml class-diagram
+  skinparam svgLinkTarget _blank
+  skinparam topurl https://github.com/LucaBONNIN/application-sgi/tree/master/app/Filament
   package App as App {
     package Resources as App.Resources {
-      class "AuditResource" as App_Resources_AuditResource {
+      class "AuditResource" as App_Resources_AuditResource [[/App/Resources/AuditResource.php AuditResource Class]] {
         #navigationSort : ?int
         #navigationIcon : string|BackedEnum|null
         #activeNavigationIcon : string|BackedEnum|null
+        {static} +canAccess()
         {static} +getNavigationGroup()
       }
+      package Suppliers as App.Resources.Suppliers {
+        class "SupplierResource" as App_Resources_Suppliers_SupplierResource [[/App/Resources/Suppliers/SupplierResource.php SupplierResource Class]] {
+          #model : ?string
+          #recordTitleAttribute : ?string
+          #navigationIcon : string|BackedEnum|null
+          #activeNavigationIcon : string|BackedEnum|null
+          #navigationSort : ?int
+          {static} +getNavigationGroup()
+          {static} +getNavigationLabel()
+          {static} +getModelLabel()
+          {static} +form(schema)
+          {static} +table(table)
+          {static} +getRelations()
+          {static} +getPages()
+        }
+        package Tables as App.Resources.Suppliers.Tables {
+          class "SuppliersTable" as App_Resources_Suppliers_Tables_SuppliersTable [[/App/Resources/Suppliers/Tables/SuppliersTable.php SuppliersTable Class]] {
+            {static} +configure(table)
+          }
+        }
+        package Schemas as App.Resources.Suppliers.Schemas {
+          class "SupplierForm" as App_Resources_Suppliers_Schemas_SupplierForm [[/App/Resources/Suppliers/Schemas/SupplierForm.php SupplierForm Class]] {
+            {static} +configure(schema)
+          }
+        }
+        package Pages as App.Resources.Suppliers.Pages {
+          class "EditSupplier" as App_Resources_Suppliers_Pages_EditSupplier [[/App/Resources/Suppliers/Pages/EditSupplier.php EditSupplier Class]] {
+            #resource : string
+            #getRedirectUrl()
+            #getHeaderActions()
+          }
+          class "ListSuppliers" as App_Resources_Suppliers_Pages_ListSuppliers [[/App/Resources/Suppliers/Pages/ListSuppliers.php ListSuppliers Class]] {
+            #resource : string
+          }
+          class "CreateSupplier" as App_Resources_Suppliers_Pages_CreateSupplier [[/App/Resources/Suppliers/Pages/CreateSupplier.php CreateSupplier Class]] {
+            #resource : string
+            #getRedirectUrl()
+          }
+        }
+      }
       package VacationPeriods as App.Resources.VacationPeriods {
-        class "VacationPeriodResource" as App_Resources_VacationPeriods_VacationPeriodResource {
+        class "VacationPeriodResource" as App_Resources_VacationPeriods_VacationPeriodResource [[/App/Resources/VacationPeriods/VacationPeriodResource.php VacationPeriodResource Class]] {
           #model : ?string
           #navigationIcon : string|BackedEnum|null
           #activeNavigationIcon : string|BackedEnum|null
@@ -21,38 +64,51 @@
           {static} +table(table)
           {static} +getRelations()
           {static} +getPages()
+          {static} +getWidgets()
         }
         package Tables as App.Resources.VacationPeriods.Tables {
-          class "VacationPeriodsTable" as App_Resources_VacationPeriods_Tables_VacationPeriodsTable {
+          class "VacationPeriodsTable" as App_Resources_VacationPeriods_Tables_VacationPeriodsTable [[/App/Resources/VacationPeriods/Tables/VacationPeriodsTable.php VacationPeriodsTable Class]] {
             {static} +configure(table)
           }
         }
         package Schemas as App.Resources.VacationPeriods.Schemas {
-          class "VacationPeriodForm" as App_Resources_VacationPeriods_Schemas_VacationPeriodForm {
+          class "VacationPeriodForm" as App_Resources_VacationPeriods_Schemas_VacationPeriodForm [[/App/Resources/VacationPeriods/Schemas/VacationPeriodForm.php VacationPeriodForm Class]] {
             {static} +configure(schema)
           }
         }
         package Pages as App.Resources.VacationPeriods.Pages {
-          class "ListVacationPeriods" as App_Resources_VacationPeriods_Pages_ListVacationPeriods {
+          class "ListVacationPeriods" as App_Resources_VacationPeriods_Pages_ListVacationPeriods [[/App/Resources/VacationPeriods/Pages/ListVacationPeriods.php ListVacationPeriods Class]] {
+            #resource : string
+            #getHeaderWidgets()
+            #getHeaderActions()
+          }
+          class "EditVacationPeriod" as App_Resources_VacationPeriods_Pages_EditVacationPeriod [[/App/Resources/VacationPeriods/Pages/EditVacationPeriod.php EditVacationPeriod Class]] {
             #resource : string
             #getHeaderActions()
           }
-          class "EditVacationPeriod" as App_Resources_VacationPeriods_Pages_EditVacationPeriod {
+          class "CreateVacationPeriod" as App_Resources_VacationPeriods_Pages_CreateVacationPeriod [[/App/Resources/VacationPeriods/Pages/CreateVacationPeriod.php CreateVacationPeriod Class]] {
             #resource : string
-            #getHeaderActions()
           }
-          class "CreateVacationPeriod" as App_Resources_VacationPeriods_Pages_CreateVacationPeriod {
-            #resource : string
+        }
+        package Widgets as App.Resources.VacationPeriods.Widgets {
+          class "MyCalendarWidget" as App_Resources_VacationPeriods_Widgets_MyCalendarWidget [[/App/Resources/VacationPeriods/Widgets/MyCalendarWidget.php MyCalendarWidget Class]] {
+            #calendarView : CalendarViewType
+            #dateClickEnabled : bool
+            +createVacationPeriodAction()
+            #onDateClick(info)
+            +getEvents(info)
           }
         }
       }
       package Users as App.Resources.Users {
-        class "UserResource" as App_Resources_Users_UserResource {
+        class "UserResource" as App_Resources_Users_UserResource [[/App/Resources/Users/UserResource.php UserResource Class]] {
           #model : ?string
           #navigationIcon : string|BackedEnum|null
           #activeNavigationIcon : string|BackedEnum|null
           #navigationSort : ?int
           {static} +getNavigationGroup()
+          {static} +getModelLabel()
+          {static} +getPluralModelLabel()
           {static} +getNavigationLabel()
           {static} +form(schema)
           {static} +table(table)
@@ -60,38 +116,38 @@
           {static} +getPages()
         }
         package Tables as App.Resources.Users.Tables {
-          class "UsersTable" as App_Resources_Users_Tables_UsersTable {
+          class "UsersTable" as App_Resources_Users_Tables_UsersTable [[/App/Resources/Users/Tables/UsersTable.php UsersTable Class]] {
             {static} +configure(table)
           }
         }
         package Schemas as App.Resources.Users.Schemas {
-          class "UserForm" as App_Resources_Users_Schemas_UserForm {
+          class "UserForm" as App_Resources_Users_Schemas_UserForm [[/App/Resources/Users/Schemas/UserForm.php UserForm Class]] {
             {static} +configure(schema)
           }
         }
         package RelationManagers as App.Resources.Users.RelationManagers {
-          class "OrdersRelationManager" as App_Resources_Users_RelationManagers_OrdersRelationManager {
+          class "OrdersRelationManager" as App_Resources_Users_RelationManagers_OrdersRelationManager [[/App/Resources/Users/RelationManagers/OrdersRelationManager.php OrdersRelationManager Class]] {
             #relationship : string
             +infolist(schema)
             +table(table)
           }
         }
         package Pages as App.Resources.Users.Pages {
-          class "ListUsers" as App_Resources_Users_Pages_ListUsers {
+          class "ListUsers" as App_Resources_Users_Pages_ListUsers [[/App/Resources/Users/Pages/ListUsers.php ListUsers Class]] {
             #resource : string
             #getHeaderActions()
           }
-          class "EditUser" as App_Resources_Users_Pages_EditUser {
+          class "EditUser" as App_Resources_Users_Pages_EditUser [[/App/Resources/Users/Pages/EditUser.php EditUser Class]] {
             #resource : string
             #getHeaderActions()
           }
-          class "CreateUser" as App_Resources_Users_Pages_CreateUser {
+          class "CreateUser" as App_Resources_Users_Pages_CreateUser [[/App/Resources/Users/Pages/CreateUser.php CreateUser Class]] {
             #resource : string
           }
         }
       }
       package Budgets as App.Resources.Budgets {
-        class "BudgetResource" as App_Resources_Budgets_BudgetResource {
+        class "BudgetResource" as App_Resources_Budgets_BudgetResource [[/App/Resources/Budgets/BudgetResource.php BudgetResource Class]] {
           #model : ?string
           #navigationIcon : string|BackedEnum|null
           #activeNavigationIcon : string|BackedEnum|null
@@ -105,31 +161,33 @@
           {static} +getPages()
         }
         package Tables as App.Resources.Budgets.Tables {
-          class "BudgetsTable" as App_Resources_Budgets_Tables_BudgetsTable {
+          class "BudgetsTable" as App_Resources_Budgets_Tables_BudgetsTable [[/App/Resources/Budgets/Tables/BudgetsTable.php BudgetsTable Class]] {
             {static} +configure(table)
           }
         }
         package Schemas as App.Resources.Budgets.Schemas {
-          class "BudgetForm" as App_Resources_Budgets_Schemas_BudgetForm {
+          class "BudgetForm" as App_Resources_Budgets_Schemas_BudgetForm [[/App/Resources/Budgets/Schemas/BudgetForm.php BudgetForm Class]] {
             {static} +configure(schema)
           }
         }
         package Pages as App.Resources.Budgets.Pages {
-          class "EditBudget" as App_Resources_Budgets_Pages_EditBudget {
+          class "EditBudget" as App_Resources_Budgets_Pages_EditBudget [[/App/Resources/Budgets/Pages/EditBudget.php EditBudget Class]] {
+            #resource : string
+            #getRedirectUrl()
+            #getHeaderActions()
+          }
+          class "ListBudgets" as App_Resources_Budgets_Pages_ListBudgets [[/App/Resources/Budgets/Pages/ListBudgets.php ListBudgets Class]] {
             #resource : string
             #getHeaderActions()
           }
-          class "ListBudgets" as App_Resources_Budgets_Pages_ListBudgets {
+          class "CreateBudget" as App_Resources_Budgets_Pages_CreateBudget [[/App/Resources/Budgets/Pages/CreateBudget.php CreateBudget Class]] {
             #resource : string
-            #getHeaderActions()
-          }
-          class "CreateBudget" as App_Resources_Budgets_Pages_CreateBudget {
-            #resource : string
+            #getRedirectUrl()
           }
         }
       }
       package Orders as App.Resources.Orders {
-        class "OrderResource" as App_Resources_Orders_OrderResource {
+        class "OrderResource" as App_Resources_Orders_OrderResource [[/App/Resources/Orders/OrderResource.php OrderResource Class]] {
           #model : ?string
           #navigationIcon : string|BackedEnum|null
           #activeNavigationIcon : string|BackedEnum|null
@@ -148,20 +206,20 @@
           {static} +getEloquentQuery()
         }
         package Tables as App.Resources.Orders.Tables {
-          class "OrdersTable" as App_Resources_Orders_Tables_OrdersTable {
+          class "OrdersTable" as App_Resources_Orders_Tables_OrdersTable [[/App/Resources/Orders/Tables/OrdersTable.php OrdersTable Class]] {
             {static} +table(table)
           }
         }
         package Schemas as App.Resources.Orders.Schemas {
-          class "OrderForm" as App_Resources_Orders_Schemas_OrderForm {
+          class "OrderForm" as App_Resources_Orders_Schemas_OrderForm [[/App/Resources/Orders/Schemas/OrderForm.php OrderForm Class]] {
             {static} +configure(schema)
           }
-          class "OrderInfolist" as App_Resources_Orders_Schemas_OrderInfolist {
+          class "OrderInfolist" as App_Resources_Orders_Schemas_OrderInfolist [[/App/Resources/Orders/Schemas/OrderInfolist.php OrderInfolist Class]] {
             {static} +configure(schema)
           }
         }
         package RelationManagers as App.Resources.Orders.RelationManagers {
-          class "LinesRelationManager" as App_Resources_Orders_RelationManagers_LinesRelationManager {
+          class "LinesRelationManager" as App_Resources_Orders_RelationManagers_LinesRelationManager [[/App/Resources/Orders/RelationManagers/LinesRelationManager.php LinesRelationManager Class]] {
             #relationship : string
             +form(schema)
             +infolist(schema)
@@ -169,23 +227,23 @@
           }
         }
         package Pages as App.Resources.Orders.Pages {
-          class "EditOrder" as App_Resources_Orders_Pages_EditOrder {
+          class "EditOrder" as App_Resources_Orders_Pages_EditOrder [[/App/Resources/Orders/Pages/EditOrder.php EditOrder Class]] {
             #resource : string
             #getHeaderActions()
           }
-          class "CreateOrder" as App_Resources_Orders_Pages_CreateOrder {
+          class "CreateOrder" as App_Resources_Orders_Pages_CreateOrder [[/App/Resources/Orders/Pages/CreateOrder.php CreateOrder Class]] {
             #resource : string
             #mutateFormDataBeforeCreate(data)
             #afterCreate()
           }
-          class "ListOrders" as App_Resources_Orders_Pages_ListOrders {
+          class "ListOrders" as App_Resources_Orders_Pages_ListOrders [[/App/Resources/Orders/Pages/ListOrders.php ListOrders Class]] {
             #resource : string
             #getHeaderActions()
           }
         }
       }
       package Categories as App.Resources.Categories {
-        class "CategoryResource" as App_Resources_Categories_CategoryResource {
+        class "CategoryResource" as App_Resources_Categories_CategoryResource [[/App/Resources/Categories/CategoryResource.php CategoryResource Class]] {
           #model : ?string
           #recordTitleAttribute : ?string
           #navigationIcon : string|BackedEnum|null
@@ -200,31 +258,33 @@
           {static} +getPages()
         }
         package Tables as App.Resources.Categories.Tables {
-          class "CategoriesTable" as App_Resources_Categories_Tables_CategoriesTable {
+          class "CategoriesTable" as App_Resources_Categories_Tables_CategoriesTable [[/App/Resources/Categories/Tables/CategoriesTable.php CategoriesTable Class]] {
             {static} +configure(table)
           }
         }
         package Schemas as App.Resources.Categories.Schemas {
-          class "CategoryForm" as App_Resources_Categories_Schemas_CategoryForm {
+          class "CategoryForm" as App_Resources_Categories_Schemas_CategoryForm [[/App/Resources/Categories/Schemas/CategoryForm.php CategoryForm Class]] {
             {static} +configure(schema)
           }
         }
         package Pages as App.Resources.Categories.Pages {
-          class "ListCategories" as App_Resources_Categories_Pages_ListCategories {
+          class "ListCategories" as App_Resources_Categories_Pages_ListCategories [[/App/Resources/Categories/Pages/ListCategories.php ListCategories Class]] {
             #resource : string
             #getHeaderActions()
           }
-          class "CreateCategory" as App_Resources_Categories_Pages_CreateCategory {
+          class "CreateCategory" as App_Resources_Categories_Pages_CreateCategory [[/App/Resources/Categories/Pages/CreateCategory.php CreateCategory Class]] {
             #resource : string
+            #getRedirectUrl()
           }
-          class "EditCategory" as App_Resources_Categories_Pages_EditCategory {
+          class "EditCategory" as App_Resources_Categories_Pages_EditCategory [[/App/Resources/Categories/Pages/EditCategory.php EditCategory Class]] {
             #resource : string
+            #getRedirectUrl()
             #getHeaderActions()
           }
         }
       }
       package Services as App.Resources.Services {
-        class "ServiceResource" as App_Resources_Services_ServiceResource {
+        class "ServiceResource" as App_Resources_Services_ServiceResource [[/App/Resources/Services/ServiceResource.php ServiceResource Class]] {
           #model : ?string
           #navigationIcon : string|BackedEnum|null
           #activeNavigationIcon : string|BackedEnum|null
@@ -238,24 +298,24 @@
           {static} +getPages()
         }
         package Tables as App.Resources.Services.Tables {
-          class "ServicesTable" as App_Resources_Services_Tables_ServicesTable {
+          class "ServicesTable" as App_Resources_Services_Tables_ServicesTable [[/App/Resources/Services/Tables/ServicesTable.php ServicesTable Class]] {
             {static} +configure(table)
           }
         }
         package Schemas as App.Resources.Services.Schemas {
-          class "ServiceForm" as App_Resources_Services_Schemas_ServiceForm {
+          class "ServiceForm" as App_Resources_Services_Schemas_ServiceForm [[/App/Resources/Services/Schemas/ServiceForm.php ServiceForm Class]] {
             {static} +configure(schema)
           }
         }
         package Pages as App.Resources.Services.Pages {
-          class "ListServices" as App_Resources_Services_Pages_ListServices {
+          class "ListServices" as App_Resources_Services_Pages_ListServices [[/App/Resources/Services/Pages/ListServices.php ListServices Class]] {
             #resource : string
             #getHeaderActions()
           }
-          class "CreateService" as App_Resources_Services_Pages_CreateService {
+          class "CreateService" as App_Resources_Services_Pages_CreateService [[/App/Resources/Services/Pages/CreateService.php CreateService Class]] {
             #resource : string
           }
-          class "EditService" as App_Resources_Services_Pages_EditService {
+          class "EditService" as App_Resources_Services_Pages_EditService [[/App/Resources/Services/Pages/EditService.php EditService Class]] {
             #resource : string
             #getHeaderActions()
           }
@@ -285,6 +345,11 @@
   App_Resources_Services_ServiceResource ..> App_Resources_Services_Pages_ListServices
   App_Resources_Services_ServiceResource ..> App_Resources_Services_Schemas_ServiceForm
   App_Resources_Services_ServiceResource ..> App_Resources_Services_Tables_ServicesTable
+  App_Resources_Suppliers_SupplierResource ..> App_Resources_Suppliers_Pages_CreateSupplier
+  App_Resources_Suppliers_SupplierResource ..> App_Resources_Suppliers_Pages_EditSupplier
+  App_Resources_Suppliers_SupplierResource ..> App_Resources_Suppliers_Pages_ListSuppliers
+  App_Resources_Suppliers_SupplierResource ..> App_Resources_Suppliers_Schemas_SupplierForm
+  App_Resources_Suppliers_SupplierResource ..> App_Resources_Suppliers_Tables_SuppliersTable
   App_Resources_Users_RelationManagers_OrdersRelationManager ..> App_Resources_Orders_OrderResource
   App_Resources_Users_UserResource ..> App_Resources_Users_Pages_CreateUser
   App_Resources_Users_UserResource ..> App_Resources_Users_Pages_EditUser
@@ -292,9 +357,11 @@
   App_Resources_Users_UserResource ..> App_Resources_Users_RelationManagers_OrdersRelationManager
   App_Resources_Users_UserResource ..> App_Resources_Users_Schemas_UserForm
   App_Resources_Users_UserResource ..> App_Resources_Users_Tables_UsersTable
+  App_Resources_VacationPeriods_Pages_ListVacationPeriods ..> App_Resources_VacationPeriods_Widgets_MyCalendarWidget
   App_Resources_VacationPeriods_VacationPeriodResource ..> App_Resources_VacationPeriods_Pages_CreateVacationPeriod
   App_Resources_VacationPeriods_VacationPeriodResource ..> App_Resources_VacationPeriods_Pages_EditVacationPeriod
   App_Resources_VacationPeriods_VacationPeriodResource ..> App_Resources_VacationPeriods_Pages_ListVacationPeriods
   App_Resources_VacationPeriods_VacationPeriodResource ..> App_Resources_VacationPeriods_Schemas_VacationPeriodForm
   App_Resources_VacationPeriods_VacationPeriodResource ..> App_Resources_VacationPeriods_Tables_VacationPeriodsTable
+  App_Resources_VacationPeriods_VacationPeriodResource ..> App_Resources_VacationPeriods_Widgets_MyCalendarWidget
 @enduml
