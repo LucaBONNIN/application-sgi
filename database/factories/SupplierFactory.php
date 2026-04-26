@@ -21,9 +21,9 @@ class SupplierFactory extends Factory
             'name' => fake()->company(),
             'website_url' => fake()->url(),
             'email' => fake()->companyEmail(),
-            'phone' => fake()->phoneNumber(),
+            'phone' => fake()->e164PhoneNumber(),
             'address' => fake()->address(),
-            'siret' => fake()->numerify('### ### ### #####'),
+            'siret' => fake()->siret(),
         ];
     }
 }

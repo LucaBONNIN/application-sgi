@@ -16,12 +16,12 @@ class SupplierSeeder extends Seeder
         Supplier::create([
             'name' => 'Go Tronic',
             'email' => 'contact@gotronic.fr',
-            'phone' => '03.24.27.93.42',
+            'phone' => '+33324279342',
             'address' => '35 ter route nationale, 08110 Blagny',
             'siret' => '438 306 680 00028',
         ]);
 
         // Ajout de faux fournisseurs pour la variété
-        Supplier::factory(5)->create();
+        Supplier::factory(20)->create();
     }
 }
