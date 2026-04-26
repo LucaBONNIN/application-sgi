@@ -15,6 +15,15 @@ class Supplier extends Model implements Auditable
 
     use \OwenIt\Auditing\Auditable;
 
+    protected $fillable = [
+        'name',
+        'website_url',
+        'email',
+        'phone',
+        'address',
+        'siret',
+    ];
+
     public function orders(): HasMany
     {
         // Orders made to this supplier

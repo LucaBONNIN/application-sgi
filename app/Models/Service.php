@@ -16,6 +16,10 @@ class Service extends Model implements Auditable
 
     use \OwenIt\Auditing\Auditable;
 
+    protected $fillable = [
+        'name',
+    ];
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
