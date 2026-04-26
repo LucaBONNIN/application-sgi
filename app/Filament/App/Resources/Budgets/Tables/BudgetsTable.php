@@ -20,7 +20,7 @@ class BudgetsTable
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('amount')
-                    ->numeric()
+                    ->formatStateUsing(fn ($state): string => number_format($state / 100, 2, ',', ' ').' €')
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()

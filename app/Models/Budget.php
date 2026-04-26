@@ -17,6 +17,12 @@ class Budget extends Model implements Auditable
 
     use \OwenIt\Auditing\Auditable;
 
+    protected $fillable = [
+        'service_id',
+        'year',
+        'amount',
+    ];
+
     protected function budgetName(): Attribute
     {
         return Attribute::make(
