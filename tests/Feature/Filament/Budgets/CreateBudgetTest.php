@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Filament\Budgets;
 
+use App\Filament\App\Resources\Budgets\BudgetResource;
 use App\Filament\App\Resources\Budgets\Pages\CreateBudget;
 use App\Models\Budget;
 use App\Models\Service;
@@ -105,5 +106,20 @@ class CreateBudgetTest extends TestCase
             ->assertHasNoFormErrors();
 
         $this->assertSame(2, Budget::where('year', 2026)->count());
+    }
+
+    #[Test]
+    public function create_redirects_to_index(): void
+    {
+        $this->actingAs($this->admin);
+
+        Livewire::test(CreateBudget::class)
+            ->fillForm([
+                'service_id' => $this->service->id,
+                'year' => 2026,
+                'amount' => 100.00,
+            ])
+            ->call('create')
+            ->assertRedirect(BudgetResource::getUrl('index'));
     }
 }

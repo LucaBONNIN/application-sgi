@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Filament\Categories;
 
+use App\Filament\App\Resources\Categories\CategoryResource;
 use App\Filament\App\Resources\Categories\Pages\CreateCategory;
 use App\Models\Category;
 use App\Models\User;
@@ -108,5 +109,19 @@ class CreateCategoryTest extends TestCase
     public function generate_unique_slug_returns_base_slug_when_no_collision(): void
     {
         $this->assertSame('fournitures', Category::generateUniqueSlug('Fournitures'));
+    }
+
+    #[Test]
+    public function create_redirects_to_index(): void
+    {
+        $this->actingAs($this->admin);
+
+        Livewire::test(CreateCategory::class)
+            ->fillForm([
+                'name' => 'Test',
+                'slug' => 'test',
+            ])
+            ->call('create')
+            ->assertRedirect(CategoryResource::getUrl('index'));
     }
 }
