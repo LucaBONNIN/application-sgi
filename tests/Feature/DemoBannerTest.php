@@ -14,8 +14,9 @@ class DemoBannerTest extends TestCase
     {
         $html = view('filament.demo-banner')->render();
 
-        $this->assertStringContainsString('demo instance', strtolower($html));
-        $this->assertStringContainsString('Next reset in', $html);
+        $this->assertStringContainsString(__('filament/demo.banner.title'), $html);
+        $this->assertStringContainsString(__('filament/demo.banner.message'), $html);
+        $this->assertStringContainsString(__('filament/demo.banner.next_reset'), $html);
         $this->assertStringContainsString('calculateSeconds', $html);
         $this->assertStringContainsString('x-data', $html);
     }
