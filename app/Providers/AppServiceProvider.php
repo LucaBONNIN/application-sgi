@@ -6,6 +6,7 @@ use App\Models\User;
 use BezhanSalleh\FilamentShield\Facades\FilamentShield;
 use Filament\Support\Facades\FilamentView;
 use Filament\View\PanelsRenderHook;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // @see https://github.com/TappNetwork/filament-auditing/issues/67
+        Gate::define('audit', function ($user, $resource = null) {
+            return true;
+        });
+
+        Gate::define('restoreAudit', function ($user, $resource = null) {
+            return true;
+        });
+
         FilamentShield::prohibitDestructiveCommands($this->app->isProduction());
 
         if ($this->app->isProduction()) {
