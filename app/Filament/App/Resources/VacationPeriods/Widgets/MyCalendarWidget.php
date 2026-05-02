@@ -5,13 +5,12 @@ namespace App\Filament\App\Resources\VacationPeriods\Widgets;
 use App\Models\VacationPeriod;
 use Filament\Widgets\Widget;
 use Guava\Calendar\Enums\CalendarViewType;
+use Guava\Calendar\Filament\Actions\CreateAction;
 use Guava\Calendar\Filament\CalendarWidget;
-use Guava\Calendar\ValueObjects\CalendarEvent;
+use Guava\Calendar\ValueObjects\DateClickInfo;
 use Guava\Calendar\ValueObjects\FetchInfo;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Guava\Calendar\Filament\Actions\CreateAction;
-use Guava\Calendar\ValueObjects\DateClickInfo;
 
 class MyCalendarWidget extends CalendarWidget
 {
@@ -39,5 +38,15 @@ class MyCalendarWidget extends CalendarWidget
             ->whereDate('end_date', '>=', $info->start)
             ->whereDate('start_date', '<=', $info->end)
             ->get();
+    }
+
+    public function getOptions(): array
+    {
+        return [
+            ...parent::getOptions(),
+            'buttonText' => [
+                'today' => __('Today'),
+            ],
+        ];
     }
 }
