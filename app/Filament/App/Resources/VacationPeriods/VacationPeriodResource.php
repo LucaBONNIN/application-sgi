@@ -42,6 +42,11 @@ class VacationPeriodResource extends Resource
         return __('filament/resources/vacation_period.label');
     }
 
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament/resources/vacation_period.plural_label');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return VacationPeriodForm::configure($schema);

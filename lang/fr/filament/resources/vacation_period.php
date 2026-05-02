@@ -3,6 +3,7 @@
 return [
     'navigation_label' => 'Vacances scolaires',
     'label' => 'Période de vacances',
+    'plural_label' => 'Vacances scolaires',
 
     'fields' => [
         'name' => 'Nom',
