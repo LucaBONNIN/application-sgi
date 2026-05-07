@@ -33,9 +33,9 @@ class AppServiceProvider extends ServiceProvider
             return true;
         });
 
-        FilamentShield::prohibitDestructiveCommands($this->app->isProduction());
+        FilamentShield::prohibitDestructiveCommands($this->app->isProduction() || $this->app->environment('demonstration'));
 
-        if ($this->app->isProduction()) {
+        if ($this->app->environment('demonstration')) {
             FilamentView::registerRenderHook(
                 PanelsRenderHook::BODY_START,
                 fn () => view('filament.demo-banner'),

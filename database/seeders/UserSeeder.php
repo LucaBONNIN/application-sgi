@@ -12,7 +12,7 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        $domain = app()->isProduction() ? '127011.xyz' : 'laravel.dev.test';
+        $domain = app()->environment('demonstration') ? '127011.xyz' : 'laravel.dev.test';
 
         // L'admin intendance
         $admin = User::create([
@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
 
         User::factory(10)
             ->when(
-                app()->isProduction(),
+                app()->environment('demonstration'),
                 fn ($factory) => $factory->state(fn () => ['email' => fake()->unique()->userName()."@{$domain}"])
             )
             ->create()
