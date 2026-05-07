@@ -12,4 +12,4 @@ Schedule::command('app:reset-demo')
     ->everyThirtyMinutes()
     ->withoutOverlapping()
     ->onOneServer()
-    ->environments(['production']);
+    ->environments(['demonstration']);
