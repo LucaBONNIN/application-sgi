@@ -1,0 +1,67 @@
+name: PR Tests
+
+on:
+  pull_request:
+    branches:
+      - master
+
+env:
+  DOCKER_COMPOSE_CMD: docker compose -f docker-compose.yml -f docker-compose.ci.yml
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .env
+        run: cp .env.example .env
+
+      - name: Determine package manager
+        id: determine-package-manager
+        run: |
+          if [ -f yarn.lock ]; then
+            echo "PACKAGE_MANAGER=yarn" >> $GITHUB_ENV
+            echo "LOCK_FILE=yarn.lock" >> $GITHUB_ENV
+          elif [ -f package-lock.json ]; then
+            echo "PACKAGE_MANAGER=npm" >> $GITHUB_ENV
+            echo "LOCK_FILE=package-lock.json" >> $GITHUB_ENV
+          else
+            echo "No lock file found. Exiting."
+            exit 1
+          fi
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            vendor/
+            node_modules/
+          key: ${{ runner.os }}-deps-${{ hashFiles('composer.lock') }}-${{ hashFiles(env.LOCK_FILE) }}
+          restore-keys: |
+            ${{ runner.os }}-deps-${{ hashFiles('composer.lock') }}-
+            ${{ runner.os }}-deps-
+
+      - name: Start CI stack
+        run: $DOCKER_COMPOSE_CMD up -d
+
+      - name: Wait for PostgreSQL
+        run: |
+          until $DOCKER_COMPOSE_CMD exec -T postgres pg_isready -U postgres; do
+            echo "Waiting for postgres..."
+            sleep 1
+          done
+
+      - name: Install dependencies & Build
+        run: |
+          $DOCKER_COMPOSE_CMD exec -T php composer install --optimize-autoloader --no-interaction --no-progress
+          $DOCKER_COMPOSE_CMD exec -T node ${{ env.PACKAGE_MANAGER }} install
+          $DOCKER_COMPOSE_CMD exec -T node ${{ env.PACKAGE_MANAGER }} run build
+
+      - name: Run Tests
+        run: $DOCKER_COMPOSE_CMD exec -T php php artisan test --compact
+
+      - name: Tear down CI stack
+        if: always()
+        run: $DOCKER_COMPOSE_CMD down
