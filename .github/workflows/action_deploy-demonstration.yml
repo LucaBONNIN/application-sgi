@@ -20,7 +20,12 @@ jobs:
     steps:
       - name: Set project name
         run: |
+          # 1. Keep your dynamic project name
           echo "PROJECT_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
+          
+          # 2. Dynamically create a lowercase version of the repository for the Swarm image
+          REPO_LOWER="${GITHUB_REPOSITORY,,}"
+          echo "DYNAMIC_IMAGE_TAG=ghcr.io/${REPO_LOWER}:${GITHUB_SHA}" >> $GITHUB_ENV
       - uses: serversideup/github-action-docker-swarm-deploy@v4
         with:
           env_file_base64: "${{ secrets.DEMONSTRATION_ENV_FILE_BASE64 }}"
@@ -34,6 +39,6 @@ jobs:
           ssh_remote_known_hosts: "${{ secrets.SSH_REMOTE_KNOWN_HOSTS }}"
           stack_name: "${{ env.PROJECT_NAME }}"
         env:
-          SPIN_IMAGE_DOCKERFILE_PHP: "ghcr.io/${{ github.repository }}:${{ github.sha }}"
+          SPIN_IMAGE_DOCKERFILE_PHP: "${{ env.DYNAMIC_IMAGE_TAG }}"
           SPIN_DEPLOYMENT_ENVIRONMENT: demonstration
           AUTHORIZED_KEYS: "${{ secrets.AUTHORIZED_KEYS }}"
