@@ -109,10 +109,16 @@ jobs:
         with:
           path: node_modules/
           key: ${{ steps.set-cache-key.outputs.CACHE_KEY }}
+      - name: Sanitize tags to lowercase
+        run: |
+          # Store the input in a bash variable
+          RAW_TAGS="${{ inputs.docker-tags }}"
+          # Use bash string manipulation (,,) to make it lowercase and save to GitHub ENV
+          echo "CLEAN_TAGS=${RAW_TAGS,,}" >> $GITHUB_ENV
       - name: docker-build-action
         uses: serversideup/github-action-docker-build@v6
         with:
-          tags: "${{ inputs.docker-tags }}"
+          tags: "${{ env.CLEAN_TAGS }}"
           dockerfile: "${{ inputs.dockerfile }}"
           registry: "ghcr.io"
           registry-username: "${{ github.actor }}"
